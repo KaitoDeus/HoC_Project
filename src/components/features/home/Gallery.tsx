@@ -67,6 +67,57 @@ export default function Gallery() {
     }
   });
 
+  // Auto-snap to the nearest product when scrolling stops inside the gallery
+  const isSnappingRef = useRef(false);
+
+  useEffect(() => {
+    let snapTimer: ReturnType<typeof setTimeout>;
+
+    const unsubscribe = scrollYProgress.on("change", () => {
+      if (isSnappingRef.current) return;
+
+      clearTimeout(snapTimer);
+      snapTimer = setTimeout(() => {
+        const container = containerRef.current;
+        if (!container) return;
+
+        const containerTop = container.offsetTop;
+        const containerBottom = containerTop + container.offsetHeight - window.innerHeight;
+        const currentScroll = window.scrollY;
+
+        // Only snap if we're inside the gallery section
+        if (currentScroll < containerTop - 50 || currentScroll > containerBottom + 50) return;
+
+        const relativeScroll = currentScroll - containerTop;
+        const sectionHeight = window.innerHeight;
+        const nearestIndex = Math.round(relativeScroll / sectionHeight);
+        const clampedIndex = Math.max(0, Math.min(nearestIndex, products.length - 1));
+        const targetScroll = containerTop + clampedIndex * sectionHeight;
+
+        // Only snap if we're not already close enough
+        if (Math.abs(currentScroll - targetScroll) < 5) return;
+
+        isSnappingRef.current = true;
+
+        const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
+        if (lenis) {
+          lenis.scrollTo(targetScroll, {
+            duration: 0.8,
+            onComplete: () => { isSnappingRef.current = false; }
+          });
+        } else {
+          window.scrollTo({ top: targetScroll, behavior: "smooth" });
+          setTimeout(() => { isSnappingRef.current = false; }, 800);
+        }
+      }, 150);
+    });
+
+    return () => {
+      unsubscribe();
+      clearTimeout(snapTimer);
+    };
+  }, [scrollYProgress]);
+
   // Smooth scroll to a product
   const scrollToProduct = useCallback((index: number) => {
     const container = document.getElementById("catalog");
@@ -74,14 +125,20 @@ export default function Gallery() {
     const containerTop = container.offsetTop;
     const targetScrollY = containerTop + index * window.innerHeight;
 
-    const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number }) => void } }).lenis;
+    isSnappingRef.current = true;
+
+    const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
     if (lenis) {
-      lenis.scrollTo(targetScrollY, { duration: 1.4 });
+      lenis.scrollTo(targetScrollY, {
+        duration: 1.4,
+        onComplete: () => { isSnappingRef.current = false; }
+      });
     } else {
       window.scrollTo({
         top: targetScrollY,
         behavior: "smooth"
       });
+      setTimeout(() => { isSnappingRef.current = false; }, 1400);
     }
   }, []);
 

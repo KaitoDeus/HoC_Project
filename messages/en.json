@@ -1,0 +1,48 @@
+{
+  "common": {
+    "title": "HEART of CLASSY | Premium Bags & Accessories",
+    "description": "Handcrafted designer bags with exquisite, asymmetric, and unique features. Elevate your personal style.",
+    "menu": {
+      "shop": "Shop",
+      "services": "Care & Services",
+      "contact": "Contact"
+    },
+    "currency": "$",
+    "cta": {
+      "shop_now": "Shop now",
+      "inbox_to_order": "Inbox to Order"
+    }
+  },
+  "loading": {
+    "text": "Loading artwork..."
+  },
+  "home": {
+    "hero": {
+      "subtitle": "Asymmetric, Individual, Unique",
+      "description": "Elevate your individual expression with designer bags that transcend rigid structures."
+    },
+    "gallery": {
+      "title": "Collections",
+      "subtitle": "Meticulously crafted just for you"
+    }
+  },
+  "product": {
+    "status": {
+      "in_stock": "In Stock",
+      "out_stock": "Out of Stock"
+    },
+    "tabs": {
+      "details": "Product details",
+      "dimensions": "Dimensions",
+      "material": "Material",
+      "care": "Product Care"
+    },
+    "care_instruction": "Store in its dust bag and avoid prolonged exposure to moisture, heat, and direct sunlight.",
+    "shipping_instruction": "Each item is carefully packed in a signature ribbon box and shipped nationwide with premium courier services."
+  },
+  "contact": {
+    "title": "Connect With Us",
+    "subtitle": "Get in touch via our social channels to place an order or receive personalized assistance.",
+    "email": "Contact Email"
+  }
+}

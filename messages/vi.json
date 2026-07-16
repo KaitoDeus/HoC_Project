@@ -1,0 +1,48 @@
+{
+  "common": {
+    "title": "HEART of CLASSY | Túi Xách & Phụ Kiện Cao Cấp",
+    "description": "Thương hiệu túi xách thiết kế thủ công tinh tế, bất đối xứng và độc bản. Làm nổi bật phong cách thời trang cá nhân của bạn.",
+    "menu": {
+      "shop": "Cửa Hàng",
+      "services": "Bảo Quản & Dịch Vụ",
+      "contact": "Liên Hệ"
+    },
+    "currency": "đ",
+    "cta": {
+      "shop_now": "Mua ngay",
+      "inbox_to_order": "Inbox để đặt hàng"
+    }
+  },
+  "loading": {
+    "text": "Đang tải tác phẩm nghệ thuật..."
+  },
+  "home": {
+    "hero": {
+      "subtitle": "Bất đối xứng, Cá tính, Độc nhất",
+      "description": "Nâng tầm phong cách cá nhân với những thiết kế túi xách phá vỡ mọi cấu trúc khuôn mẫu."
+    },
+    "gallery": {
+      "title": "Bộ Sưu Tập",
+      "subtitle": "Được chế tác tỉ mỉ dành riêng cho bạn"
+    }
+  },
+  "product": {
+    "status": {
+      "in_stock": "Còn hàng",
+      "out_stock": "Hết hàng"
+    },
+    "tabs": {
+      "details": "Chi tiết sản phẩm",
+      "dimensions": "Kích thước",
+      "material": "Chất liệu",
+      "care": "Bảo quản sản phẩm"
+    },
+    "care_instruction": "Bảo quản trong túi vải chống bụi và tránh tiếp xúc lâu với độ ẩm, nhiệt độ cao và ánh nắng trực tiếp.",
+    "shipping_instruction": "Mỗi sản phẩm đều được đóng gói tỉ mỉ bằng hộp quà thắt nơ cao cấp và vận chuyển toàn quốc nhanh chóng."
+  },
+  "contact": {
+    "title": "Kết Nối Với Chúng Tôi",
+    "subtitle": "Liên hệ ngay qua các kênh để đặt hàng trực tiếp và nhận tư vấn chi tiết.",
+    "email": "Email liên hệ"
+  }
+}

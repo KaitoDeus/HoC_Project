@@ -264,18 +264,10 @@ export default function Gallery() {
                 )}
               </div>
 
-              <div className="flex items-end justify-between px-1">
-                <div className="space-y-1">
-                  <span className="text-[9px] tracking-[0.2em] text-accent font-sans font-semibold">
-                    {product.category}
-                  </span>
+              <div className="px-1">
                   <h3 className="font-serif text-lg font-medium text-white group-hover:text-accent transition-colors">
                     {product.name}
                   </h3>
-                </div>
-                <div className="font-sans text-sm font-semibold text-white">
-                  {product.priceVi} đ
-                </div>
               </div>
             </motion.div>
           ))}

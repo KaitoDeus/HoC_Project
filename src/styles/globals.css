@@ -208,3 +208,14 @@ input, textarea {
   scrollbar-width: none;  /* Firefox */
 }
 
+/* Smooth scroll snap container */
+.smooth-snap {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.smooth-snap > * > .snap-slide {
+  scroll-snap-stop: always;
+  scroll-snap-align: start;
+}

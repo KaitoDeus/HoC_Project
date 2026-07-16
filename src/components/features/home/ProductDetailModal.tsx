@@ -230,7 +230,7 @@ export default function ProductDetailModal({
         {/* RIGHT COLUMN: Large Image & Typographic Overlay */}
         <div
           ref={rightColumnRef}
-          className={`w-full md:w-[40%] h-[40vh] md:h-full relative bg-neutral-900 snap-y snap-mandatory ${
+          className={`w-full md:w-[40%] h-[40vh] md:h-full relative bg-neutral-900 smooth-snap ${
             activeImages && activeImages.length > 0
               ? "overflow-y-auto no-scrollbar"
               : "overflow-hidden"
@@ -243,7 +243,7 @@ export default function ProductDetailModal({
           >
             {activeImages && activeImages.length > 0 ? (
               activeImages.map((imgSrc, idx) => (
-                <div key={idx} className="relative w-full h-[40vh] md:h-screen flex-shrink-0 snap-start">
+                <div key={idx} className="snap-slide relative w-full h-[40vh] md:h-screen flex-shrink-0">
                   <Image
                     src={imgSrc}
                     alt={`${selectedProduct.name} - ${idx + 1}`}

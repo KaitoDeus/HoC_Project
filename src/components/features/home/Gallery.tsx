@@ -12,28 +12,18 @@ import { products } from "@/data/products";
 import ParallaxImage from "./ParallaxImage";
 import ProductDetailModal from "./ProductDetailModal";
 
-// Module-level state for wheel interceptor (avoids react-hooks/refs issues)
-let currentSnapIndex = 0;
-let isSnapAnimating = false;
-
-function scrollToSnapIndex(index: number) {
+// Scroll to a specific product index within the gallery
+function scrollToProductIndex(index: number) {
   const container = document.getElementById("catalog");
   if (!container) return;
   const containerTop = container.offsetTop;
   const targetScrollY = containerTop + index * window.innerHeight;
 
-  isSnapAnimating = true;
-  currentSnapIndex = index;
-
-  const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
+  const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number }) => void } }).lenis;
   if (lenis) {
-    lenis.scrollTo(targetScrollY, {
-      duration: 1.0,
-      onComplete: () => { isSnapAnimating = false; }
-    });
+    lenis.scrollTo(targetScrollY, { duration: 0.6 });
   } else {
     window.scrollTo({ top: targetScrollY, behavior: "smooth" });
-    setTimeout(() => { isSnapAnimating = false; }, 1000);
   }
 }
 
@@ -92,71 +82,6 @@ export default function Gallery() {
     }
   });
 
-  // Wheel interceptor: one scroll = one product transition
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      const container = document.getElementById("catalog");
-      if (!container) return;
-
-      const containerTop = container.offsetTop;
-      const containerBottom = containerTop + container.offsetHeight - window.innerHeight;
-      const currentScroll = window.scrollY;
-
-      // Only intercept when inside the gallery section
-      if (currentScroll < containerTop - 10 || currentScroll > containerBottom + 10) return;
-
-      // Block scroll and animate to next/prev product
-      e.preventDefault();
-
-      if (isSnapAnimating) return;
-
-      const direction = e.deltaY > 0 ? 1 : -1;
-      const nextIndex = currentSnapIndex + direction;
-
-      // Allow natural scroll out of gallery boundaries
-      if (nextIndex < 0 || nextIndex >= products.length) {
-        isSnapAnimating = true;
-        const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
-        const exitTarget = nextIndex < 0
-          ? containerTop - window.innerHeight
-          : containerBottom + window.innerHeight;
-        if (lenis) {
-          lenis.scrollTo(exitTarget, {
-            duration: 0.8,
-            onComplete: () => { isSnapAnimating = false; }
-          });
-        } else {
-          window.scrollTo({ top: exitTarget, behavior: "smooth" });
-          setTimeout(() => { isSnapAnimating = false; }, 800);
-        }
-        return;
-      }
-
-      scrollToSnapIndex(nextIndex);
-    };
-
-    // Sync currentSnapIndex when entering the gallery from outside
-    const handleScroll = () => {
-      if (isSnapAnimating) return;
-      const container = document.getElementById("catalog");
-      if (!container) return;
-
-      const containerTop = container.offsetTop;
-      const relativeScroll = window.scrollY - containerTop;
-      const sectionHeight = window.innerHeight;
-      const idx = Math.round(relativeScroll / sectionHeight);
-      currentSnapIndex = Math.max(0, Math.min(idx, products.length - 1));
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <section id="catalog" className="w-full bg-neutral-950">
       {/* DESKTOP: HIGH-END VERTICAL PRODUCT REEL (Inspired by Figma Frame 2 & 4) */}
@@ -181,7 +106,7 @@ export default function Gallery() {
                   return (
                     <button
                       key={product.id}
-                      onClick={() => scrollToSnapIndex(targetIdx)}
+                      onClick={() => scrollToProductIndex(targetIdx)}
                       className={`text-left text-[24px] font-sans tracking-[-0.02em] font-normal uppercase transition-all duration-300 outline-none ${
                         activeIndex === targetIdx
                           ? "text-white"

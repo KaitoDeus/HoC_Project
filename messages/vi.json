@@ -1,6 +1,9 @@
 {
   "common": {
-    "title": "HEART of CLASSY | Túi Xách & Phụ Kiện Cao Cấp",
+    "title": "HEART of CLASSY | Túi Xách Cao Cấp",
+    "title_shop": "HEART of CLASSY | Cửa Hàng",
+    "title_services": "HEART of CLASSY | Bảo Quản & Dịch Vụ",
+    "title_contact": "HEART of CLASSY | Liên Hệ",
     "description": "Thương hiệu túi xách thiết kế thủ công tinh tế, bất đối xứng và độc bản. Làm nổi bật phong cách thời trang cá nhân của bạn.",
     "menu": {
       "shop": "Cửa Hàng",

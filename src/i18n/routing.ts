@@ -9,7 +9,10 @@ export const routing = defineRouting({
   defaultLocale: 'en',
 
   // Ẩn tiền tố ngôn ngữ mặc định trong URL (nếu muốn / thay vì /en)
-  localePrefix: 'as-needed'
+  localePrefix: 'as-needed',
+
+  // Tắt tự động phát hiện ngôn ngữ trình duyệt để luôn mặc định tiếng Anh khi vào lần đầu
+  localeDetection: false
 });
 
 // Các helper thay thế cho Link, redirect, useRouter của Next.js

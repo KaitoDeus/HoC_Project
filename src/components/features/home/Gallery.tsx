@@ -67,80 +67,100 @@ export default function Gallery() {
     }
   });
 
-  // Auto-snap to the nearest product when scrolling stops inside the gallery
-  const isSnappingRef = useRef(false);
+  // Wheel interceptor: one scroll = one product transition
+  const currentIndexRef = useRef(0);
+  const isAnimatingRef = useRef(false);
 
-  useEffect(() => {
-    let snapTimer: ReturnType<typeof setTimeout>;
-
-    const unsubscribe = scrollYProgress.on("change", () => {
-      if (isSnappingRef.current) return;
-
-      clearTimeout(snapTimer);
-      snapTimer = setTimeout(() => {
-        const container = containerRef.current;
-        if (!container) return;
-
-        const containerTop = container.offsetTop;
-        const containerBottom = containerTop + container.offsetHeight - window.innerHeight;
-        const currentScroll = window.scrollY;
-
-        // Only snap if we're inside the gallery section
-        if (currentScroll < containerTop - 50 || currentScroll > containerBottom + 50) return;
-
-        const relativeScroll = currentScroll - containerTop;
-        const sectionHeight = window.innerHeight;
-        const nearestIndex = Math.round(relativeScroll / sectionHeight);
-        const clampedIndex = Math.max(0, Math.min(nearestIndex, products.length - 1));
-        const targetScroll = containerTop + clampedIndex * sectionHeight;
-
-        // Only snap if we're not already close enough
-        if (Math.abs(currentScroll - targetScroll) < 5) return;
-
-        isSnappingRef.current = true;
-
-        const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
-        if (lenis) {
-          lenis.scrollTo(targetScroll, {
-            duration: 0.8,
-            onComplete: () => { isSnappingRef.current = false; }
-          });
-        } else {
-          window.scrollTo({ top: targetScroll, behavior: "smooth" });
-          setTimeout(() => { isSnappingRef.current = false; }, 800);
-        }
-      }, 150);
-    });
-
-    return () => {
-      unsubscribe();
-      clearTimeout(snapTimer);
-    };
-  }, [scrollYProgress]);
-
-  // Smooth scroll to a product
-  const scrollToProduct = useCallback((index: number) => {
-    const container = document.getElementById("catalog");
+  const scrollToIndex = useCallback((index: number) => {
+    const container = containerRef.current;
     if (!container) return;
     const containerTop = container.offsetTop;
     const targetScrollY = containerTop + index * window.innerHeight;
 
-    isSnappingRef.current = true;
+    isAnimatingRef.current = true;
+    currentIndexRef.current = index;
 
     const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
     if (lenis) {
       lenis.scrollTo(targetScrollY, {
-        duration: 1.4,
-        onComplete: () => { isSnappingRef.current = false; }
+        duration: 1.0,
+        onComplete: () => { isAnimatingRef.current = false; }
       });
     } else {
-      window.scrollTo({
-        top: targetScrollY,
-        behavior: "smooth"
-      });
-      setTimeout(() => { isSnappingRef.current = false; }, 1400);
+      window.scrollTo({ top: targetScrollY, behavior: "smooth" });
+      setTimeout(() => { isAnimatingRef.current = false; }, 1000);
     }
   }, []);
+
+  // Intercept wheel events inside the gallery to enforce one-image-per-scroll
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const containerTop = container.offsetTop;
+      const containerBottom = containerTop + container.offsetHeight - window.innerHeight;
+      const currentScroll = window.scrollY;
+
+      // Only intercept when inside the gallery section
+      if (currentScroll < containerTop - 10 || currentScroll > containerBottom + 10) return;
+
+      // Block scroll and animate to next/prev product
+      e.preventDefault();
+
+      if (isAnimatingRef.current) return;
+
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const nextIndex = currentIndexRef.current + direction;
+
+      // Allow natural scroll out of gallery boundaries
+      if (nextIndex < 0 || nextIndex >= products.length) {
+        isAnimatingRef.current = true;
+        const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
+        const exitTarget = nextIndex < 0
+          ? containerTop - window.innerHeight
+          : containerBottom + window.innerHeight;
+        if (lenis) {
+          lenis.scrollTo(exitTarget, {
+            duration: 0.8,
+            onComplete: () => { isAnimatingRef.current = false; }
+          });
+        } else {
+          window.scrollTo({ top: exitTarget, behavior: "smooth" });
+          setTimeout(() => { isAnimatingRef.current = false; }, 800);
+        }
+        return;
+      }
+
+      scrollToIndex(nextIndex);
+    };
+
+    // Sync currentIndexRef when entering the gallery from outside
+    const handleScroll = () => {
+      if (isAnimatingRef.current) return;
+      const container = containerRef.current;
+      if (!container) return;
+
+      const containerTop = container.offsetTop;
+      const relativeScroll = window.scrollY - containerTop;
+      const sectionHeight = window.innerHeight;
+      const idx = Math.round(relativeScroll / sectionHeight);
+      currentIndexRef.current = Math.max(0, Math.min(idx, products.length - 1));
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollToIndex]);
+
+  // Smooth scroll to a product (for sidebar menu clicks)
+  const scrollToProduct = useCallback((index: number) => {
+    scrollToIndex(index);
+  }, [scrollToIndex]);
 
   return (
     <section id="catalog" className="w-full bg-neutral-950">

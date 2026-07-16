@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
@@ -11,6 +11,31 @@ import { Product } from "@/types/product";
 import { products } from "@/data/products";
 import ParallaxImage from "./ParallaxImage";
 import ProductDetailModal from "./ProductDetailModal";
+
+// Module-level state for wheel interceptor (avoids react-hooks/refs issues)
+let currentSnapIndex = 0;
+let isSnapAnimating = false;
+
+function scrollToSnapIndex(index: number) {
+  const container = document.getElementById("catalog");
+  if (!container) return;
+  const containerTop = container.offsetTop;
+  const targetScrollY = containerTop + index * window.innerHeight;
+
+  isSnapAnimating = true;
+  currentSnapIndex = index;
+
+  const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
+  if (lenis) {
+    lenis.scrollTo(targetScrollY, {
+      duration: 1.0,
+      onComplete: () => { isSnapAnimating = false; }
+    });
+  } else {
+    window.scrollTo({ top: targetScrollY, behavior: "smooth" });
+    setTimeout(() => { isSnapAnimating = false; }, 1000);
+  }
+}
 
 export default function Gallery() {
   const tProduct = useTranslations("product");
@@ -68,34 +93,9 @@ export default function Gallery() {
   });
 
   // Wheel interceptor: one scroll = one product transition
-  const currentIndexRef = useRef(0);
-  const isAnimatingRef = useRef(false);
-
-  const scrollToIndex = useCallback((index: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-    const containerTop = container.offsetTop;
-    const targetScrollY = containerTop + index * window.innerHeight;
-
-    isAnimatingRef.current = true;
-    currentIndexRef.current = index;
-
-    const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
-    if (lenis) {
-      lenis.scrollTo(targetScrollY, {
-        duration: 1.0,
-        onComplete: () => { isAnimatingRef.current = false; }
-      });
-    } else {
-      window.scrollTo({ top: targetScrollY, behavior: "smooth" });
-      setTimeout(() => { isAnimatingRef.current = false; }, 1000);
-    }
-  }, []);
-
-  // Intercept wheel events inside the gallery to enforce one-image-per-scroll
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
-      const container = containerRef.current;
+      const container = document.getElementById("catalog");
       if (!container) return;
 
       const containerTop = container.offsetTop;
@@ -108,14 +108,14 @@ export default function Gallery() {
       // Block scroll and animate to next/prev product
       e.preventDefault();
 
-      if (isAnimatingRef.current) return;
+      if (isSnapAnimating) return;
 
       const direction = e.deltaY > 0 ? 1 : -1;
-      const nextIndex = currentIndexRef.current + direction;
+      const nextIndex = currentSnapIndex + direction;
 
       // Allow natural scroll out of gallery boundaries
       if (nextIndex < 0 || nextIndex >= products.length) {
-        isAnimatingRef.current = true;
+        isSnapAnimating = true;
         const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { duration?: number; onComplete?: () => void }) => void } }).lenis;
         const exitTarget = nextIndex < 0
           ? containerTop - window.innerHeight
@@ -123,29 +123,29 @@ export default function Gallery() {
         if (lenis) {
           lenis.scrollTo(exitTarget, {
             duration: 0.8,
-            onComplete: () => { isAnimatingRef.current = false; }
+            onComplete: () => { isSnapAnimating = false; }
           });
         } else {
           window.scrollTo({ top: exitTarget, behavior: "smooth" });
-          setTimeout(() => { isAnimatingRef.current = false; }, 800);
+          setTimeout(() => { isSnapAnimating = false; }, 800);
         }
         return;
       }
 
-      scrollToIndex(nextIndex);
+      scrollToSnapIndex(nextIndex);
     };
 
-    // Sync currentIndexRef when entering the gallery from outside
+    // Sync currentSnapIndex when entering the gallery from outside
     const handleScroll = () => {
-      if (isAnimatingRef.current) return;
-      const container = containerRef.current;
+      if (isSnapAnimating) return;
+      const container = document.getElementById("catalog");
       if (!container) return;
 
       const containerTop = container.offsetTop;
       const relativeScroll = window.scrollY - containerTop;
       const sectionHeight = window.innerHeight;
       const idx = Math.round(relativeScroll / sectionHeight);
-      currentIndexRef.current = Math.max(0, Math.min(idx, products.length - 1));
+      currentSnapIndex = Math.max(0, Math.min(idx, products.length - 1));
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
@@ -155,12 +155,7 @@ export default function Gallery() {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [scrollToIndex]);
-
-  // Smooth scroll to a product (for sidebar menu clicks)
-  const scrollToProduct = useCallback((index: number) => {
-    scrollToIndex(index);
-  }, [scrollToIndex]);
+  }, []);
 
   return (
     <section id="catalog" className="w-full bg-neutral-950">
@@ -186,7 +181,7 @@ export default function Gallery() {
                   return (
                     <button
                       key={product.id}
-                      onClick={() => scrollToProduct(targetIdx)}
+                      onClick={() => scrollToSnapIndex(targetIdx)}
                       className={`text-left text-[24px] font-sans tracking-[-0.02em] font-normal uppercase transition-all duration-300 outline-none ${
                         activeIndex === targetIdx
                           ? "text-white"

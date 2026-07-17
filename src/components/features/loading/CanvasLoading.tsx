@@ -68,7 +68,7 @@ export default function CanvasLoading() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black select-none overflow-hidden"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#020202] select-none overflow-hidden"
           data-loading
         >
           {/* Thanh ngang chạy từ 2 bên rìa màn hình hội tụ vào giữa logo theo % tiến trình */}

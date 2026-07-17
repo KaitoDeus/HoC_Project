@@ -65,7 +65,7 @@ export const products: Product[] = [
     priceEn: "80",
     image: "/images/Shop_4.jpg",
     dimensions: "29 x 17 x 6cm",
-    descriptionVi: "Lấy cảm hứng từ những đường nét vượt ra ngoài cấu trúc cố định, Lunaline sở hữu đường nét mềm mại và hình dáng bất đối xứng đặc trưng. Được thiết kế để đeo trên vai hoặc cầm tay, mang đến nhiều cách thể hiện khác nhau thông qua thiết kế linh hoạt.",
+    descriptionVi: "Lấy cảm hứng từ những đường nét vượt ra ngoài cấu trúc cấu trúc cố định, Lunaline sở hữu đường nét mềm mại và hình dáng bất đối xứng đặc trưng. Được thiết kế để đeo trên vai hoặc cầm tay, mang đến nhiều cách thể hiện khác nhau thông qua thiết kế linh hoạt.",
     descriptionEn: "Inspired by lines that move beyond fixed structures, Lunaline features a fluid silhouette and distinctive asymmetrical shape. Designed to be worn on the shoulder or carried by hand, it offers different expressions through its adaptable design.",
     sloganVi: "Bất đối xứng, Cá tính, Độc nhất",
     sloganEn: "Asymmetric, Individual, Unique",

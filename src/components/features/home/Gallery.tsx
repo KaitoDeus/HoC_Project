@@ -85,7 +85,11 @@ export default function Gallery() {
   return (
     <section id="catalog" className="w-full bg-neutral-950">
       {/* DESKTOP: HIGH-END VERTICAL PRODUCT REEL (Inspired by Figma Frame 2 & 4) */}
-      <div ref={containerRef} className="relative w-full hidden md:block h-[500vh]">
+      <div 
+        ref={containerRef} 
+        className="relative w-full hidden md:block"
+        style={{ height: `${products.length * 100}vh` }}
+      >
         <div className="sticky top-0 left-0 w-full h-screen overflow-hidden bg-neutral-950 flex flex-row items-center">
           
           {/* LEFT SIDEBAR (Product Menu & Brand Title) */}
@@ -93,32 +97,23 @@ export default function Gallery() {
 
             {/* Vertical Menu List */}
             <div className="flex flex-col gap-6 items-start">
-              {(() => {
-                const menuSequence = [0, 1, 2, 3, 4];
-                const activePos = menuSequence.indexOf(activeIndex);
-                const displayIndices = Array.from({ length: 5 }, (_, i) => {
-                  const seqIdx = (activePos - 2 + i + 5) % 5;
-                  return menuSequence[seqIdx];
-                });
-
-                return displayIndices.map((targetIdx) => {
-                  const product = products[targetIdx];
-                  return (
-                    <button
-                      key={product.id}
-                      onClick={() => scrollToProductIndex(targetIdx)}
-                      className={`text-left text-[24px] font-sans tracking-[-0.02em] font-normal uppercase transition-all duration-300 outline-none ${
-                        activeIndex === targetIdx
-                          ? "text-white"
-                          : "text-white/20 hover:text-white/50"
-                      }`}
-                      data-cursor-text="SCROLL"
-                    >
-                      {product.name}
-                    </button>
-                  );
-                });
-              })()}
+              {products.map((product, idx) => {
+                if (product.name === "LOREM IMSUM") return null;
+                return (
+                  <button
+                    key={product.id}
+                    onClick={() => scrollToProductIndex(idx)}
+                    className={`text-left text-[24px] font-sans tracking-[-0.02em] font-normal uppercase transition-all duration-300 outline-none ${
+                      activeIndex === idx
+                        ? "text-white"
+                        : "text-white/20 hover:text-white/50"
+                    }`}
+                    data-cursor-text="SCROLL"
+                  >
+                    {product.name}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -177,40 +172,45 @@ export default function Gallery() {
       <div className="block md:hidden px-6 py-24 space-y-16 bg-neutral-950">
 
         <div className="space-y-16">
-          {products.map((product, idx) => (
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6 }}
-              key={product.id}
-              onClick={() => openProduct(product)}
-              className="flex flex-col space-y-4 cursor-pointer group"
-            >
-              <div className="relative w-full aspect-[4/5] bg-neutral-900 overflow-hidden rounded-[2px] border border-neutral-900">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  sizes="90vw"
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-103"
-                  priority={idx === 0}
-                />
-                
-                {product.isOutOfStock && (
-                  <div className="absolute top-4 right-4 bg-neutral-950/80 backdrop-blur-sm border border-neutral-900 px-3 py-1 text-[9px] tracking-widest text-neutral-400 font-semibold rounded-[2px]">
-                    {tProduct("status.out_stock")}
+          {products.map((product, idx) => {
+            const isPromo = product.name === "LOREM IMSUM";
+            return (
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6 }}
+                key={product.id}
+                onClick={isPromo ? undefined : () => openProduct(product)}
+                className={`flex flex-col space-y-4 group ${isPromo ? "pointer-events-none select-none" : "cursor-pointer"}`}
+              >
+                <div className="relative w-full aspect-[4/5] bg-neutral-900 overflow-hidden rounded-[2px] border border-neutral-900">
+                  <Image
+                    src={product.image}
+                    alt={isPromo ? "Heart of Classy campaign" : product.name}
+                    fill
+                    sizes="90vw"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-103"
+                    priority={idx === 0}
+                  />
+                  
+                  {product.isOutOfStock && !isPromo && (
+                    <div className="absolute top-4 right-4 bg-neutral-950/80 backdrop-blur-sm border border-neutral-900 px-3 py-1 text-[9px] tracking-widest text-neutral-400 font-semibold rounded-[2px]">
+                      {tProduct("status.out_stock")}
+                    </div>
+                  )}
+                </div>
+
+                {!isPromo && (
+                  <div className="px-1">
+                    <h3 className="font-serif text-lg font-medium text-white group-hover:text-accent transition-colors">
+                      {product.name}
+                    </h3>
                   </div>
                 )}
-              </div>
-
-              <div className="px-1">
-                  <h3 className="font-serif text-lg font-medium text-white group-hover:text-accent transition-colors">
-                    {product.name}
-                  </h3>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 

@@ -3,17 +3,21 @@
 import { useTransition } from "react";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
 
   const toggleLanguage = () => {
     const nextLocale = locale === "vi" ? "en" : "vi";
+    const query = searchParams ? searchParams.toString() : "";
+    const target = query ? `${pathname}?${query}` : pathname;
     startTransition(() => {
-      router.replace(pathname, { locale: nextLocale });
+      router.replace(target, { locale: nextLocale });
     });
   };
 

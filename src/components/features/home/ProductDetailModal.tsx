@@ -78,7 +78,7 @@ export default function ProductDetailModal({
         {/* LEFT COLUMN: Product Details & Accordion OR Social Links */}
         <div
           onClick={showOrderLinks ? () => setShowOrderLinks(false) : undefined}
-          className={`w-full md:w-[60%] h-[60vh] md:h-full bg-neutral-950 text-white flex flex-col justify-between px-6 md:pl-[65px] md:pr-12 lg:pr-16 py-12 overflow-y-auto relative ${
+          className={`w-full md:w-[60%] h-[60vh] md:h-full bg-neutral-950 text-white flex flex-col justify-start px-6 md:pl-[65px] md:pr-12 lg:pr-16 overflow-y-auto relative ${
             showOrderLinks ? "cursor-pointer" : ""
           }`}
         >
@@ -127,11 +127,11 @@ export default function ProductDetailModal({
             </>
           ) : (
             <>
-              {/* Main Content Area (Vertically Centered in Viewport, Top-aligned Columns) */}
-              <div className="my-auto w-full">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 lg:gap-12 items-start">
-                  {/* Sub-column 1: Product Name, Price & Color */}
-                  <div className="md:col-span-5 space-y-6 md:space-y-8">
+              {/* Main Content Area (Fixed Top Offset pt-[35vh] - No Title Pushing Up on Accordion Expand) */}
+              <div className="w-full pt-[35vh] pb-16">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 lg:gap-14 items-start">
+                  {/* Sub-column 1: Product Name, Price & Color (Flush Left with Header Logo) */}
+                  <div className="md:col-span-4 lg:col-span-4 space-y-6 md:space-y-8">
                     <div className="space-y-1.5">
                       <h1 className="font-sans text-[30px] tracking-tight text-white uppercase leading-tight font-normal">
                         {selectedProduct.name}
@@ -171,8 +171,8 @@ export default function ProductDetailModal({
                     )}
                   </div>
 
-                  {/* Sub-column 2: Accordion & Order & Enquire link */}
-                  <div className="md:col-span-7 space-y-6">
+                  {/* Sub-column 2: Accordion & Order & Enquire link (Centered in left panel) */}
+                  <div className="md:col-span-8 lg:col-span-8 space-y-6">
                     <Accordion
                       defaultOpenId="details"
                       variant="minimal"
@@ -245,21 +245,22 @@ export default function ProductDetailModal({
           >
             {activeImages && activeImages.length > 0 ? (
               activeImages.map((imgSrc, idx) => (
-                <div key={idx} className="relative w-full h-[40vh] md:h-screen flex-shrink-0">
+                <div key={idx} className="relative w-full flex-shrink-0">
                   <Image
                     src={imgSrc}
                     alt={`${selectedProduct.name} - ${idx + 1}`}
-                    fill
+                    width={0}
+                    height={0}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority={idx === 0}
-                    className="object-cover object-top"
+                    className="w-full h-auto object-contain block"
                   />
                   {/* Overlay shadow */}
                   <div className="absolute inset-0 bg-neutral-950/10 pointer-events-none" />
                 </div>
               ))
             ) : (
-              <>
+              <div className="relative w-full flex-shrink-0">
                 <Image
                   src={
                     selectedProduct.colorVariants && selectedProduct.colorVariants[selectedColorIndex]
@@ -267,15 +268,16 @@ export default function ProductDetailModal({
                       : selectedProduct.image
                   }
                   alt={selectedProduct.name}
-                  fill
+                  width={0}
+                  height={0}
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
-                  className="object-cover object-top transition-opacity duration-500"
+                  className="w-full h-auto object-contain block transition-opacity duration-500"
                   key={selectedColorIndex}
                 />
                 {/* Overlay shadow */}
-                <div className="absolute inset-0 bg-neutral-950/10" />
-              </>
+                <div className="absolute inset-0 bg-neutral-950/10 pointer-events-none" />
+              </div>
             )}
           </div>
 

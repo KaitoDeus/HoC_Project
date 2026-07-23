@@ -54,6 +54,8 @@ export default function Gallery() {
   }, [selectedProduct]);
 
   const openProduct = (product: Product) => {
+    const isInteractive = product.id === "mooniver-bag" || product.id === "lunaline-bag";
+    if (!isInteractive) return;
     router.push(`?product=${product.id}`, { scroll: false });
   };
 
@@ -89,13 +91,17 @@ export default function Gallery() {
         className="relative w-full hidden md:block"
         style={{ height: `${products.length * 100}vh` }}
       >
-        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden bg-neutral-950 flex flex-row items-center">
+        <div className="sticky top-0 left-0 w-full h-screen overflow-hidden bg-neutral-950 flex flex-row items-center justify-between">
           
-          {/* LEFT SIDEBAR (Product Menu & Brand Title) */}
-          <div className="w-[30%] h-full flex flex-col justify-center relative py-20 pl-12 lg:pl-24">
+          {/* LEFT SIDEBAR (Product Menu - Aligned to 65px left margin) */}
+          <div className="flex-1 h-full flex flex-col justify-center relative px-6 md:pl-[65px] md:pr-4">
 
-            {/* Vertical Menu List - Displaying all 5 products matching Figma specs */}
-            <div className="flex flex-col gap-[7px] items-start">
+            {/* Vertical Menu List - Smoothly centers active item horizontally with middle image */}
+            <motion.div 
+              animate={{ y: (2 - activeIndex) * 31 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="flex flex-col gap-[7px] items-start"
+            >
               {products.map((product, idx) => {
                 return (
                   <button
@@ -112,13 +118,13 @@ export default function Gallery() {
                   </button>
                 );
               })}
-            </div>
+            </motion.div>
           </div>
 
           {/* CENTER PANEL (Scroll-Driven Vertical Sliding Strip) */}
-          <div className="w-[40%] h-full flex items-center justify-center">
+          <div className="w-[70vh] lg:w-[76vh] max-w-[55vw] h-full flex items-center justify-center flex-shrink-0">
             <div 
-              style={{ width: "55vh" }}
+              style={{ width: "100%" }}
               className="relative h-full overflow-hidden bg-neutral-950 border-x border-neutral-900/60 group"
             >
               <motion.div
@@ -129,7 +135,7 @@ export default function Gallery() {
                   <div 
                     key={product.id} 
                     style={{ height: `${frameHeightVh}vh` }} 
-                    className="w-full relative"
+                    className="w-full relative py-[10px]"
                   >
                     <ParallaxImage
                       product={product}
@@ -145,8 +151,8 @@ export default function Gallery() {
             </div>
           </div>
 
-          {/* RIGHT PANEL (Active Product Slogan only, vertically centered) */}
-          <div className="w-[30%] h-full flex flex-col justify-center py-20 pr-12 lg:pr-24">
+          {/* RIGHT PANEL (Active Product Slogan - Aligned to 65px right margin) */}
+          <div className="flex-1 h-full flex flex-col justify-center relative px-6 md:pr-[65px] md:pl-4">
             <div className="text-right overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.span
@@ -155,7 +161,7 @@ export default function Gallery() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="font-sans font-light text-sm md:text-base text-white tracking-widest block"
+                  className="font-sans font-normal text-base md:text-[18px] text-white tracking-normal block"
                 >
                   {locale === "vi" ? products[activeIndex].sloganVi : products[activeIndex].sloganEn}
                 </motion.span>
@@ -171,6 +177,7 @@ export default function Gallery() {
 
         <div className="space-y-16">
           {products.map((product, idx) => {
+            const isInteractive = product.id === "mooniver-bag" || product.id === "lunaline-bag";
             return (
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
@@ -178,8 +185,8 @@ export default function Gallery() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6 }}
                 key={product.id}
-                onClick={() => openProduct(product)}
-                className="flex flex-col space-y-4 group cursor-pointer"
+                onClick={isInteractive ? () => openProduct(product) : undefined}
+                className={`flex flex-col space-y-4 group ${isInteractive ? "cursor-pointer" : "cursor-default"}`}
               >
                 <div className="relative w-full aspect-[4/5] bg-neutral-900 overflow-hidden rounded-[2px] border border-neutral-900">
                   <Image

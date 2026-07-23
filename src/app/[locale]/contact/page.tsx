@@ -30,33 +30,32 @@ export default async function ContactPage({
 
       <main className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row md:h-screen md:overflow-hidden select-none">
         {/* LEFT COLUMN: Contact Information */}
-        <div className="w-full md:w-[32%] lg:w-[28%] bg-neutral-950 flex flex-col justify-center items-center p-8 pt-32 pb-16 md:p-12 md:pt-20 md:pb-20 lg:p-16 h-full border-r border-neutral-900/40 z-10">
-          
-          <div className="w-fit flex flex-col gap-24 md:gap-32">
-            {/* Middle section: GENERAL REQUIRES */}
-            <div className="space-y-3">
-              <span className="font-sans text-[27px] leading-none font-normal uppercase tracking-wide text-white block select-text">
+        <div className="w-full md:w-[36%] lg:w-[32%] bg-neutral-950 flex flex-col justify-center items-start px-6 md:pl-[65px] md:pr-12 py-32 md:py-20 h-full border-r border-neutral-900/40 z-10">
+          <div className="my-auto w-full flex flex-col gap-12 md:gap-16">
+            {/* Top section: GENERAL REQUIRES */}
+            <div className="space-y-2">
+              <h2 className="font-sans text-[30px] leading-[34px] font-normal uppercase tracking-wide text-white block select-text">
                 {locale === "vi" ? "LIÊN HỆ CHUNG" : "GENERAL REQUIRES"}
-              </span>
+              </h2>
               <a
                 href="mailto:heartofclassy@gmail.com"
-                className="font-sans text-[27px] leading-none font-normal text-white hover:text-white transition-colors block select-text"
+                className="font-sans text-[24px] leading-[32px] font-normal text-white hover:text-accent transition-colors block select-text"
               >
                 heartofclassy@gmail.com
               </a>
             </div>
 
             {/* Bottom section: FOLLOW US */}
-            <div className="space-y-4">
-              <span className="font-sans text-[27px] leading-none font-normal uppercase tracking-wide text-white block select-text">
+            <div className="space-y-3">
+              <h2 className="font-sans text-[30px] leading-[34px] font-normal uppercase tracking-wide text-white block select-text">
                 {locale === "vi" ? "THEO DÕI CHÚNG TÔI" : "FOLLOW US"}
-              </span>
-              <div className="flex flex-col space-y-3">
+              </h2>
+              <div className="flex flex-col space-y-2">
                 <a
                   href="https://www.instagram.com/heartofclassy.official"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[27px] leading-none font-normal text-white hover:text-white underline underline-offset-8 decoration-1 decoration-white/40 hover:decoration-white transition-all w-fit"
+                  className="font-sans text-[24px] leading-[32px] font-normal text-white hover:text-accent underline underline-offset-8 decoration-1 decoration-white/40 hover:decoration-white transition-all w-fit"
                 >
                   Instagram
                 </a>
@@ -64,7 +63,7 @@ export default async function ContactPage({
                   href="https://www.facebook.com/Heartofclassy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[27px] leading-none font-normal text-white hover:text-white underline underline-offset-8 decoration-1 decoration-white/40 hover:decoration-white transition-all w-fit"
+                  className="font-sans text-[24px] leading-[32px] font-normal text-white hover:text-accent underline underline-offset-8 decoration-1 decoration-white/40 hover:decoration-white transition-all w-fit"
                 >
                   Facebook
                 </a>
@@ -72,14 +71,13 @@ export default async function ContactPage({
                   href="https://www.tiktok.com/@heartofclassy"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-sans text-[27px] leading-none font-normal text-white hover:text-white underline underline-offset-8 decoration-1 decoration-white/40 hover:decoration-white transition-all w-fit"
+                  className="font-sans text-[24px] leading-[32px] font-normal text-white hover:text-accent underline underline-offset-8 decoration-1 decoration-white/40 hover:decoration-white transition-all w-fit"
                 >
                   Tik tok
                 </a>
               </div>
             </div>
           </div>
-
         </div>
 
         {/* RIGHT COLUMN: Handbag Image */}

@@ -8,21 +8,7 @@ import { Menu, X } from "lucide-react";
 
 export default function Header() {
   const t = useTranslations("common.menu");
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
@@ -36,14 +22,8 @@ export default function Header() {
   }, [isMobileMenuOpen]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-350 ${
-        isScrolled
-          ? "bg-neutral-950/70 border-b border-neutral-900/60 py-4 backdrop-blur-md"
-          : "bg-transparent py-6 border-b border-transparent"
-      }`}
-    >
-      <div className="w-full px-6 md:px-[65px] flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-40 py-6 bg-transparent border-b border-transparent pointer-events-none">
+      <div className="w-full px-6 md:px-[65px] flex items-center justify-between pointer-events-auto">
         {/* LOGO */}
         <Link
           href="/"

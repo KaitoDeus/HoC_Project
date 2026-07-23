@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslations, useLocale } from "next-intl";
-import { X, ArrowLeft } from "lucide-react";
+import { X } from "lucide-react";
 import Accordion from "@/components/ui/Accordion";
 import { Product } from "@/types/product";
 
@@ -76,7 +76,12 @@ export default function ProductDetailModal({
         data-lenis-prevent
       >
         {/* LEFT COLUMN: Product Details & Accordion OR Social Links */}
-        <div className="w-full md:w-[60%] h-[60vh] md:h-full bg-neutral-950 text-white flex flex-col justify-between p-8 md:p-16 lg:p-24 overflow-y-auto relative">
+        <div
+          onClick={showOrderLinks ? () => setShowOrderLinks(false) : undefined}
+          className={`w-full md:w-[60%] h-[60vh] md:h-full bg-neutral-950 text-white flex flex-col justify-between px-6 md:pl-[65px] md:pr-12 lg:pr-16 py-12 overflow-y-auto relative ${
+            showOrderLinks ? "cursor-pointer" : ""
+          }`}
+        >
           {showOrderLinks ? (
             <>
               {/* Close button in top-right of left panel */}
@@ -97,8 +102,11 @@ export default function ProductDetailModal({
                     href="https://www.instagram.com/heartofclassy.official"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => handleTrackClick("instagram", selectedProduct)}
-                    className="font-serif text-2xl lg:text-3xl text-white hover:text-accent transition-colors underline underline-offset-8 decoration-neutral-800 hover:decoration-white"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleTrackClick("instagram", selectedProduct);
+                    }}
+                    className="font-serif text-2xl lg:text-3xl text-white hover:text-accent transition-colors underline underline-offset-8 decoration-neutral-800 hover:decoration-white cursor-pointer"
                   >
                     Instagram
                   </a>
@@ -106,8 +114,11 @@ export default function ProductDetailModal({
                     href="https://www.facebook.com/Heartofclassy"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => handleTrackClick("facebook", selectedProduct)}
-                    className="font-serif text-2xl lg:text-3xl text-white hover:text-accent transition-colors underline underline-offset-8 decoration-neutral-800 hover:decoration-white"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleTrackClick("facebook", selectedProduct);
+                    }}
+                    className="font-serif text-2xl lg:text-3xl text-white hover:text-accent transition-colors underline underline-offset-8 decoration-neutral-800 hover:decoration-white cursor-pointer"
                   >
                     Facebook
                   </a>
@@ -116,26 +127,23 @@ export default function ProductDetailModal({
             </>
           ) : (
             <>
-              {/* Spacer so content doesn't overlap header */}
-              <div className="h-20" />
-
-              {/* Main Content Area */}
-              <div className="flex-grow flex flex-col justify-center my-8 md:my-0">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+              {/* Main Content Area (Vertically Centered in Viewport, Top-aligned Columns) */}
+              <div className="my-auto w-full">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 lg:gap-12 items-start">
                   {/* Sub-column 1: Product Name, Price & Color */}
-                  <div className="md:col-span-5 space-y-7">
+                  <div className="md:col-span-5 space-y-6 md:space-y-8">
                     <div className="space-y-1.5">
-                      <h1 className="font-sans text-[32px] tracking-tight text-white uppercase leading-tight font-normal">
+                      <h1 className="font-sans text-[30px] tracking-tight text-white uppercase leading-tight font-normal">
                         {selectedProduct.name}
                       </h1>
-                      <div className="font-sans text-[24px] leading-[26px] tracking-[-0.02em] text-white font-normal">
-                        {selectedProduct.priceVi} đ
+                      <div className="font-sans text-[24px] leading-[28px] tracking-[-0.02em] text-white font-normal">
+                        {locale === "vi" ? `${selectedProduct.priceVi} VNĐ` : `$ ${selectedProduct.priceEn}`}
                       </div>
                     </div>
 
                     {/* Color picker radio buttons */}
                     {selectedProduct.colorVariants && selectedProduct.colorVariants.length > 0 && (
-                      <div className="space-y-3">
+                      <div className="space-y-3 pt-1">
                         <span className="text-[16px] tracking-[-0.02em] font-sans text-white/70">
                           {locale === "vi" ? "Màu sắc" : "Color"}
                         </span>
@@ -166,6 +174,7 @@ export default function ProductDetailModal({
                   {/* Sub-column 2: Accordion & Order & Enquire link */}
                   <div className="md:col-span-7 space-y-6">
                     <Accordion
+                      defaultOpenId="details"
                       variant="minimal"
                       items={[
                         {
@@ -177,7 +186,7 @@ export default function ProductDetailModal({
                           id: "dimensions",
                           title: tProduct("tabs.dimensions"),
                           content: (
-                            <ul className="text-white font-sans font-light text-sm list-disc list-inside space-y-1">
+                            <ul className="text-white font-sans font-normal text-[24px] leading-[32px] list-disc list-inside space-y-1.5 pt-1">
                               <li>{selectedProduct.dimensions} (Length x Height x Width)</li>
                               <li>
                                 {locale === "vi"
@@ -201,27 +210,16 @@ export default function ProductDetailModal({
                       ]}
                     />
 
-                    <div className="pt-4">
+                    <div className="pt-6">
                       <button
                         onClick={() => setShowOrderLinks(true)}
-                        className="text-white hover:text-accent font-sans text-[24px] leading-[26px] tracking-[-0.02em] font-normal underline underline-offset-8 decoration-1 transition-colors text-left"
+                        className="text-white hover:text-accent font-sans text-[24px] leading-[28px] tracking-[-0.02em] font-normal underline underline-offset-8 decoration-1 transition-colors text-left"
                       >
                         {locale === "vi" ? "Đặt Hàng & Tư Vấn" : "Order & Enquire"}
                       </button>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* Back to Catalog button at bottom */}
-              <div className="pt-4 border-t border-neutral-900/60 mt-auto">
-                <button
-                  onClick={closeProduct}
-                  className="group flex items-center gap-2 text-xs tracking-[0.25em] text-white/70 hover:text-white transition-colors"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" />
-                  <span>{locale === "vi" ? "Quay lại danh mục" : "Back to catalog"}</span>
-                </button>
               </div>
             </>
           )}
@@ -230,11 +228,15 @@ export default function ProductDetailModal({
         {/* RIGHT COLUMN: Large Image & Typographic Overlay */}
         <div
           ref={rightColumnRef}
-          className={`w-full md:w-[40%] h-[40vh] md:h-full relative bg-neutral-900 smooth-snap ${
+          onClick={showOrderLinks ? () => setShowOrderLinks(false) : undefined}
+          className={`w-full md:w-[40%] h-[40vh] md:h-full relative bg-neutral-900 ${
+            showOrderLinks ? "cursor-pointer" : ""
+          } ${
             activeImages && activeImages.length > 0
               ? "overflow-y-auto no-scrollbar"
               : "overflow-hidden"
           }`}
+          data-cursor-text={showOrderLinks ? "BACK" : undefined}
         >
           <div
             className={`transition-all duration-700 ${
@@ -243,7 +245,7 @@ export default function ProductDetailModal({
           >
             {activeImages && activeImages.length > 0 ? (
               activeImages.map((imgSrc, idx) => (
-                <div key={idx} className="snap-slide relative w-full h-[40vh] md:h-screen flex-shrink-0">
+                <div key={idx} className="relative w-full h-[40vh] md:h-screen flex-shrink-0">
                   <Image
                     src={imgSrc}
                     alt={`${selectedProduct.name} - ${idx + 1}`}

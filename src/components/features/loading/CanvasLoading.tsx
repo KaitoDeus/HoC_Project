@@ -68,7 +68,7 @@ export default function CanvasLoading() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#020202] select-none overflow-hidden"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#161616] select-none overflow-hidden"
           data-loading
         >
           {/* Thanh ngang chạy từ 2 bên rìa màn hình hội tụ vào giữa logo theo % tiến trình */}
@@ -117,15 +117,6 @@ export default function CanvasLoading() {
                 className="object-contain"
               />
             </motion.div>
-          </div>
-
-          {/* Số loading status bên phải chạy realtime */}
-          <div className="absolute right-8 sm:right-12 md:right-16 bottom-8 sm:bottom-12 z-20 flex items-baseline gap-1 font-sans pointer-events-none select-none">
-            <span className="text-neutral-600 text-[10px] tracking-[0.25em] font-semibold">Loading</span>
-            <span className="text-white text-3xl sm:text-4xl md:text-5xl font-light tracking-tighter tabular-nums leading-none min-w-[3ch] text-right">
-              {String(progress).padStart(2, "0")}
-            </span>
-            <span className="text-neutral-500 text-xs sm:text-sm font-light">%</span>
           </div>
         </motion.div>
       )}

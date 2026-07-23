@@ -25,20 +25,17 @@ export default function ParallaxImage({
   const endRange = Math.min(1, (index + 1) / (total - 1));
   // Translate the image inside its overflow-hidden container to create parallax depth
   const yImg = useTransform(scrollYProgress, [startRange, endRange], ["-8%", "8%"]);
-  const isPromo = product.name === "LOREM IMSUM";
-
-  // Define custom size scales and aspect ratios per product to mimic Figma layout exactly
   const getProductLayout = (id: string) => {
     switch (id) {
-      case "promo-1":
+      case "ownly-cardholder":
         return { height: "56vh", aspect: "aspect-[4/5]" };
-      case "promo-2":
+      case "ownly-bag":
         return { height: "54vh", aspect: "aspect-[4/5]" };
       case "mooniver-bag":
         return { height: "60vh", aspect: "aspect-[3/4]" };
       case "lunaline-bag":
         return { height: "58vh", aspect: "aspect-[4/5]" };
-      case "promo-3":
+      case "layer-bow-charm":
         return { height: "54vh", aspect: "aspect-[4/5]" };
       default:
         return { height: "58vh", aspect: "aspect-[4/5]" };
@@ -50,12 +47,10 @@ export default function ParallaxImage({
   return (
     <div className="w-full h-full flex items-center justify-center bg-neutral-950">
       <div
-        onClick={isPromo ? undefined : onClick}
+        onClick={onClick}
         style={{ height: layout.height }}
-        className={`relative ${layout.aspect} overflow-hidden ${
-          isPromo ? "" : "cursor-pointer"
-        } transition-transform duration-500 hover:scale-[1.01]`}
-        data-cursor-text={isPromo ? undefined : "VIEW"}
+        className={`relative ${layout.aspect} overflow-hidden cursor-pointer transition-transform duration-500 hover:scale-[1.01]`}
+        data-cursor-text="VIEW"
       >
         <motion.div style={{ y: yImg }} className="absolute -top-[10%] left-0 w-full h-[120%]">
           <Image

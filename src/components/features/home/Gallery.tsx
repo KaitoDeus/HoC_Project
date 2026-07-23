@@ -54,7 +54,6 @@ export default function Gallery() {
   }, [selectedProduct]);
 
   const openProduct = (product: Product) => {
-    if (product.name === "LOREM IMSUM") return;
     router.push(`?product=${product.id}`, { scroll: false });
   };
 
@@ -95,17 +94,16 @@ export default function Gallery() {
           {/* LEFT SIDEBAR (Product Menu & Brand Title) */}
           <div className="w-[30%] h-full flex flex-col justify-center relative py-20 pl-12 lg:pl-24">
 
-            {/* Vertical Menu List */}
+            {/* Vertical Menu List - Displaying all 5 products */}
             <div className="flex flex-col gap-6 items-start">
               {products.map((product, idx) => {
-                if (product.name === "LOREM IMSUM") return null;
                 return (
                   <button
                     key={product.id}
                     onClick={() => scrollToProductIndex(idx)}
                     className={`text-left text-[24px] font-sans tracking-[-0.02em] font-normal uppercase transition-all duration-300 outline-none ${
                       activeIndex === idx
-                        ? "text-white"
+                        ? "text-white font-medium"
                         : "text-white/20 hover:text-white/50"
                     }`}
                     data-cursor-text="SCROLL"
@@ -173,7 +171,6 @@ export default function Gallery() {
 
         <div className="space-y-16">
           {products.map((product, idx) => {
-            const isPromo = product.name === "LOREM IMSUM";
             return (
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
@@ -181,33 +178,31 @@ export default function Gallery() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6 }}
                 key={product.id}
-                onClick={isPromo ? undefined : () => openProduct(product)}
-                className={`flex flex-col space-y-4 group ${isPromo ? "pointer-events-none select-none" : "cursor-pointer"}`}
+                onClick={() => openProduct(product)}
+                className="flex flex-col space-y-4 group cursor-pointer"
               >
                 <div className="relative w-full aspect-[4/5] bg-neutral-900 overflow-hidden rounded-[2px] border border-neutral-900">
                   <Image
                     src={product.image}
-                    alt={isPromo ? "Heart of Classy campaign" : product.name}
+                    alt={product.name}
                     fill
                     sizes="90vw"
                     className="object-cover object-center transition-transform duration-700 group-hover:scale-103"
                     priority={idx === 0}
                   />
                   
-                  {product.isOutOfStock && !isPromo && (
+                  {product.isOutOfStock && (
                     <div className="absolute top-4 right-4 bg-neutral-950/80 backdrop-blur-sm border border-neutral-900 px-3 py-1 text-[9px] tracking-widest text-neutral-400 font-semibold rounded-[2px]">
                       {tProduct("status.out_stock")}
                     </div>
                   )}
                 </div>
 
-                {!isPromo && (
-                  <div className="px-1">
-                    <h3 className="font-serif text-lg font-medium text-white group-hover:text-accent transition-colors">
-                      {product.name}
-                    </h3>
-                  </div>
-                )}
+                <div className="px-1">
+                  <h3 className="font-serif text-lg font-medium text-white group-hover:text-accent transition-colors">
+                    {product.name}
+                  </h3>
+                </div>
               </motion.div>
             );
           })}

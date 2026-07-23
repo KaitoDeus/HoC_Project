@@ -94,17 +94,17 @@ export default function Gallery() {
           {/* LEFT SIDEBAR (Product Menu & Brand Title) */}
           <div className="w-[30%] h-full flex flex-col justify-center relative py-20 pl-12 lg:pl-24">
 
-            {/* Vertical Menu List - Displaying all 5 products */}
-            <div className="flex flex-col gap-6 items-start">
+            {/* Vertical Menu List - Displaying all 5 products matching Figma specs */}
+            <div className="flex flex-col gap-[7px] items-start">
               {products.map((product, idx) => {
                 return (
                   <button
                     key={product.id}
                     onClick={() => scrollToProductIndex(idx)}
-                    className={`text-left text-[24px] font-sans tracking-[-0.02em] font-normal uppercase transition-all duration-300 outline-none ${
+                    className={`text-left text-[24px] font-sans font-normal tracking-normal uppercase transition-colors duration-300 outline-none leading-tight ${
                       activeIndex === idx
-                        ? "text-white font-medium"
-                        : "text-white/20 hover:text-white/50"
+                        ? "text-[#FFFFFF]"
+                        : "text-[#777777] hover:text-[#AAAAAA]"
                     }`}
                     data-cursor-text="SCROLL"
                   >

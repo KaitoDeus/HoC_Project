@@ -128,25 +128,45 @@ export default function Gallery() {
     };
   }, [selectedProduct]);
 
-  // On mount, teleport scroll to the middle set so user can scroll both up and down
+  // On mount, teleport scroll to the middle set so user can scroll both up and down seamlessly
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    if (typeof window !== "undefined") {
+      try {
+        window.history.scrollRestoration = "manual";
+      } catch {
+        // Ignore fallback
+      }
+    }
 
-    const containerTop = container.offsetTop;
-    const scrollableHeight = container.offsetHeight - window.innerHeight;
-    const stepPx = scrollableHeight / (TOTAL - 1);
-    const middleSetStart = containerTop + N * stepPx;
+    const scrollToMiddle = () => {
+      const container = containerRef.current;
+      if (!container) return;
 
-    // Use requestAnimationFrame to ensure layout is ready
-    requestAnimationFrame(() => {
+      const containerTop = container.offsetTop;
+      const scrollableHeight = container.offsetHeight - window.innerHeight;
+      if (scrollableHeight <= 0) return;
+
+      const stepPx = scrollableHeight / (TOTAL - 1);
+      const middleSetStart = containerTop + N * stepPx;
+
       const lenis = (window as unknown as { lenis?: { scrollTo: (target: number, options?: { immediate?: boolean }) => void } }).lenis;
       if (lenis) {
         lenis.scrollTo(middleSetStart, { immediate: true });
       } else {
         window.scrollTo({ top: middleSetStart, behavior: "instant" as ScrollBehavior });
       }
-    });
+    };
+
+    scrollToMiddle();
+    const t1 = setTimeout(scrollToMiddle, 50);
+    const t2 = setTimeout(scrollToMiddle, 150);
+    const t3 = setTimeout(scrollToMiddle, 300);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, []);
 
   const openProduct = (product: Product) => {
@@ -192,12 +212,12 @@ export default function Gallery() {
 
     const currentScroll = window.scrollY - containerTop;
 
-    // Teleport bounds: if scrolled into Set 1 (< 4.5 steps) or Set 3 (> 9.5 steps)
-    if (currentScroll < 4.5 * stepPx || currentScroll > 9.5 * stepPx) {
+    // Teleport bounds: if scrolled into Set 1 (< 3.5 steps) or Set 3 (> 9.5 steps)
+    if (currentScroll < 3.5 * stepPx || currentScroll > 9.5 * stepPx) {
       isTeleporting.current = true;
 
       // Calculate target scroll in middle set (shifting by exactly 1 set = 5 steps)
-      const shift = currentScroll < 4.5 * stepPx ? oneSetScrollPx : -oneSetScrollPx;
+      const shift = currentScroll < 3.5 * stepPx ? oneSetScrollPx : -oneSetScrollPx;
       const targetWindowScroll = window.scrollY + shift;
 
       // Use Lenis scrollTo instant or window.scrollTo
@@ -333,7 +353,7 @@ export default function Gallery() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="font-sans font-normal text-base md:text-[18px] text-white tracking-normal block"
+                  className="font-sans font-normal text-[18px] md:text-[22px] leading-[28px] text-white tracking-normal block text-right"
                 >
                   {locale === "vi" ? products[activeIndex].sloganVi : products[activeIndex].sloganEn}
                 </motion.span>

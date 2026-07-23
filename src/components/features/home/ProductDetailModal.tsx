@@ -24,12 +24,12 @@ export default function ProductDetailModal({
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const rightColumnRef = useRef<HTMLDivElement>(null);
 
-  // Reset scroll container of the right column when switching variants
+  // Reset scroll container of the right column when switching variants or products
   useEffect(() => {
     if (rightColumnRef.current) {
       rightColumnRef.current.scrollTop = 0;
     }
-  }, [selectedColorIndex]);
+  }, [selectedColorIndex, selectedProduct.id]);
 
   // Derive active images based on color variant or fallback to additionalImages
   const activeImages = (() => {
@@ -127,8 +127,8 @@ export default function ProductDetailModal({
             </>
           ) : (
             <>
-              {/* Main Content Area (Fixed Top Offset pt-[35vh] - No Title Pushing Up on Accordion Expand) */}
-              <div className="w-full pt-[35vh] pb-16">
+              {/* Main Content Area (Fixed Top Offset pt-[calc(35vh+20px)] - Moved down by 20px total) */}
+              <div className="w-full pt-[calc(35vh+20px)] pb-16">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 lg:gap-14 items-start">
                   {/* Sub-column 1: Product Name, Price & Color (Flush Left with Header Logo) */}
                   <div className="md:col-span-4 lg:col-span-4 space-y-6 md:space-y-8">

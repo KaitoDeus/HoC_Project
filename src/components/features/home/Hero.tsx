@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import heroBgSvg from "@/assets/images/hero_bg.svg";
 
 export default function Hero() {
   const t = useTranslations("home.hero");
@@ -14,7 +15,7 @@ export default function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/images/hero_bg.jpg"
+          src={heroBgSvg}
           alt="Heart of Classy premium designer bag banner"
           fill
           priority
@@ -29,40 +30,43 @@ export default function Hero() {
       <div className="absolute inset-0 z-10 hidden md:block">
         {/* Layout matching the Header's margin constraints */}
         <div className="w-full h-full px-6 md:px-[65px] relative">
-          {/* Text 1: "LUNALINE BAG" */}
+          {/* Text 1: "LUNALINE BAG" - Responsive positioning & font size */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="absolute left-[49.5%] top-[48.5%] -translate-y-1/2 font-sans text-base md:text-[18px] text-white font-normal tracking-[0.05em] uppercase"
+            className="absolute left-[44%] md:left-[47%] lg:left-[50%] xl:left-[52%] -translate-x-1/2 top-[42%] -translate-y-1/2 mt-[5px] font-sans text-[16px] md:text-[20px] lg:text-[24px] xl:text-[30px] leading-tight tracking-[-0.02em] text-white font-normal uppercase whitespace-nowrap"
           >
             LUNALINE BAG
           </motion.div>
 
-          {/* Text 2: "Asymmetric, Individual, Unique" - Horizontally aligned on exact same top line */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="absolute left-[67%] top-[48.5%] -translate-y-1/2 font-sans text-base md:text-[18px] text-white font-normal tracking-[0.05em] whitespace-nowrap"
-          >
-            {t("subtitle")}
-          </motion.div>
-
-          {/* Text 3: "Shop now" (CTA Button) - Aligned with Top Right UI right edge */}
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="absolute right-6 md:right-[65px] top-[55%] z-20"
-          >
-            <Link
-              href="/shop"
-              className="group relative inline-flex items-center text-base md:text-[18px] tracking-[0.05em] font-normal text-white hover:text-accent transition-colors pb-1 border-b border-white hover:border-accent"
+          {/* Text 2 & 3: Slogan & Shop now - Baseline aligned perfectly with LUNALINE BAG */}
+          <div className="absolute right-[3%] md:right-[5%] lg:right-[7%] xl:right-[10%] top-[42%] -translate-y-1/2 mt-[5px] pt-[3px] md:pt-[4px] flex flex-col items-end text-right z-20">
+            {/* Text 2: "Asymmetric, Individual, Unique" - Baseline aligned */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+              className="font-sans text-[13px] md:text-[16px] lg:text-[18px] xl:text-[22px] leading-tight tracking-[-0.02em] text-white font-normal whitespace-nowrap text-right"
             >
-              {tCommon("shop_now")}
-            </Link>
-          </motion.div>
+              {t("subtitle")}
+            </motion.div>
+
+            {/* Text 3: "Shop now" - Directly below slogan, right-aligned flush with ...Unique */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+              className="absolute top-full right-0 mt-2 md:mt-2.5 whitespace-nowrap text-right"
+            >
+              <Link
+                href="/shop"
+                className="group relative inline-flex items-center text-[13px] md:text-[16px] lg:text-[18px] xl:text-[22px] leading-tight tracking-[-0.02em] font-normal text-white hover:text-accent transition-colors pb-[1px] border-b border-white hover:border-accent text-right"
+              >
+                {tCommon("shop_now")}
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </div>
 

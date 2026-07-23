@@ -48,23 +48,20 @@ const sections: ServiceSection[] = [
       <div className="space-y-3 pt-1">
         <p>
           Túi xách Heart of Classy được chế tác từ da microfiber cao cấp, được
-          lựa chọn kỹ lưỡng vì độ bền, bề mặt tinh tế và khả năng giữ phom
-          dáng theo thời gian.
+          lựa chọn kỹ lưỡng vì độ bền, bề mặt tinh tế và khả năng giữ phom dáng
+          theo thời gian.
         </p>
         <p>Để bảo quản vẻ ngoài của túi:</p>
         <div className="space-y-1 pl-1">
           <p>• Cất túi trong túi vải bảo vệ (dust bag) khi không sử dụng.</p>
           <p>
-            • Tránh tiếp xúc lâu với hơi ẩm, nhiệt độ cao và ánh nắng trực
-            tiếp.
+            • Tránh tiếp xúc lâu với hơi ẩm, nhiệt độ cao và ánh nắng trực tiếp.
           </p>
           <p>
-            • Nếu túi bị ướt, hãy lau nhẹ nhàng bằng khăn khô mềm và để khô
-            tự nhiên.
+            • Nếu túi bị ướt, hãy lau nhẹ nhàng bằng khăn khô mềm và để khô tự
+            nhiên.
           </p>
-          <p>
-            • Tránh tiếp xúc với các vật sắc nhọn có thể làm xước bề mặt.
-          </p>
+          <p>• Tránh tiếp xúc với các vật sắc nhọn có thể làm xước bề mặt.</p>
           <p>
             • Không đựng quá đầy để tránh làm ảnh hưởng đến phom dáng của túi.
           </p>
@@ -93,12 +90,12 @@ const sections: ServiceSection[] = [
       <div className="space-y-3 pt-1">
         <p>
           Đơn hàng thường được chuẩn bị và gửi đi trong vòng 1 – 5 ngày làm
-          việc. Thời gian giao hàng có thể thay đổi tùy thuộc vào vị trí của
-          bạn và đơn vị vận chuyển.
+          việc. Thời gian giao hàng có thể thay đổi tùy thuộc vào vị trí của bạn
+          và đơn vị vận chuyển.
         </p>
         <p>
-          Đối với đơn hàng quốc tế, thời gian giao hàng và phí vận chuyển có
-          thể thay đổi tùy theo điểm đến.
+          Đối với đơn hàng quốc tế, thời gian giao hàng và phí vận chuyển có thể
+          thay đổi tùy theo điểm đến.
         </p>
       </div>
     ),
@@ -123,9 +120,9 @@ const sections: ServiceSection[] = [
     contentVi: (
       <div className="space-y-3 pt-1">
         <p>
-          Nếu bạn nhận được sản phẩm có lỗi sản xuất hoặc không đúng sản phẩm
-          đã đặt, vui lòng liên hệ với chúng tôi trong vòng 48 giờ kể từ khi
-          nhận hàng và cung cấp hình ảnh rõ nét về tình trạng lỗi.
+          Nếu bạn nhận được sản phẩm có lỗi sản xuất hoặc không đúng sản phẩm đã
+          đặt, vui lòng liên hệ với chúng tôi trong vòng 48 giờ kể từ khi nhận
+          hàng và cung cấp hình ảnh rõ nét về tình trạng lỗi.
         </p>
         <p>
           Sản phẩm đổi trả phải chưa qua sử dụng và được gửi lại nguyên vẹn
@@ -143,8 +140,8 @@ const sections: ServiceSection[] = [
         <p>
           Each Heart of Classy bag is carefully prepared and packaged before it
           reaches you. Designed to protect the product while creating a
-          thoughtful unboxing experience, every order reflects the same attention
-          to detail found in our designs.
+          thoughtful unboxing experience, every order reflects the same
+          attention to detail found in our designs.
         </p>
       </div>
     ),
@@ -152,9 +149,9 @@ const sections: ServiceSection[] = [
       <div className="space-y-3 pt-1">
         <p>
           Mỗi chiếc túi Heart of Classy đều được chuẩn bị và đóng gói cẩn thận
-          trước khi gửi đến bạn. Được thiết kế để bảo vệ sản phẩm đồng thời
-          mang lại trải nghiệm mở hộp trọn vẹn, mỗi đơn hàng đều phản chiếu sự
-          tỉ mỉ chi tiết tương tự như trên các thiết kế của chúng tôi.
+          trước khi gửi đến bạn. Được thiết kế để bảo vệ sản phẩm đồng thời mang
+          lại trải nghiệm mở hộp trọn vẹn, mỗi đơn hàng đều phản chiếu sự tỉ mỉ
+          chi tiết tương tự như trên các thiết kế của chúng tôi.
         </p>
       </div>
     ),
@@ -182,28 +179,23 @@ export default function ServicesPage({
 
       <main className="min-h-screen bg-neutral-950 text-white select-none">
         {/* Full-height centered content */}
-        <div className="min-h-screen flex items-center justify-center px-6 md:px-12 py-32">
-          <div className="w-full max-w-[900px]">
+        <div className="min-h-screen flex items-center justify-center px-6 md:px-[65px] py-32">
+          <div className="w-full max-w-[1300px]">
             {/* Accordion sections */}
             <div className="w-full flex flex-col space-y-6">
               {sections.map((section) => {
                 const isOpen = openId === section.id;
 
                 return (
-                  <div
-                    key={section.id}
-                    className="w-full"
-                  >
+                  <div key={section.id} className="w-full">
                     {/* Section header button - inline title and +/- indicator */}
                     <button
                       onClick={() => toggleItem(section.id)}
-                      className="flex items-center gap-3 py-1 text-left uppercase font-sans text-[30px] leading-[34px] tracking-[0.05em] text-white outline-none font-normal"
+                      className="flex items-center gap-3 py-1 text-left uppercase font-sans text-[28px] leading-[34px] tracking-[0.05em] text-white outline-none font-normal"
                       aria-expanded={isOpen}
                     >
-                      <span>
-                        {isVi ? section.titleVi : section.title}
-                      </span>
-                      <span className="font-normal text-[30px] leading-[34px]">
+                      <span>{isVi ? section.titleVi : section.title}</span>
+                      <span className="font-normal text-[28px] leading-[34px]">
                         {isOpen ? "–" : "+"}
                       </span>
                     </button>
@@ -224,7 +216,7 @@ export default function ServicesPage({
                           }}
                           className="overflow-hidden"
                         >
-                          <div className="pt-3 pb-4 md:pb-6 pr-4 font-sans text-[24px] leading-[32px] text-white font-normal">
+                          <div className="pt-3 pb-4 md:pb-6 pr-4 font-sans text-[22px] leading-[30px] text-white font-normal">
                             {isVi ? section.contentVi : section.content}
                           </div>
                         </motion.div>

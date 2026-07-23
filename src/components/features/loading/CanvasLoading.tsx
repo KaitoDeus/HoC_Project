@@ -21,7 +21,7 @@ export default function CanvasLoading() {
     const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
     if (lenis) lenis.stop();
 
-    // Ẩn màn hình loading sau 3.5 giây
+    // Ẩn màn hình loading sau 2.5 giây (Tăng tốc độ tải trang 28%)
     const timer = setTimeout(() => {
       setIsVisible(false);
       document.body.style.overflow = originalOverflow;
@@ -29,13 +29,13 @@ export default function CanvasLoading() {
       // Kích hoạt lại Lenis nếu có
       const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
       if (lenis) lenis.start();
-    }, 3500);
+    }, 2500);
 
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = originalOverflow;
       document.documentElement.style.overflow = originalHtmlOverflow;
-      // Khởi động lại Lenis khi unmount (đảm bảo mở khóa khi chuyển trang trước 3.5 giây)
+      // Khởi động lại Lenis khi unmount (đảm bảo mở khóa khi chuyển trang trước 2.5 giây)
       const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
       if (lenis) lenis.start();
     };
@@ -44,7 +44,7 @@ export default function CanvasLoading() {
   useEffect(() => {
     // Chạy phần trăm loading realtime từ 0 đến 100
     const start = Date.now();
-    const duration = 2800; // Đạt 100% trước khi hiệu ứng fade-out bắt đầu ở giây thứ 3
+    const duration = 2000; // Đạt 100% trong 2.0s trước khi fade-out ở 2.5s
 
     const updateProgress = () => {
       const now = Date.now();
@@ -67,7 +67,7 @@ export default function CanvasLoading() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-[#161616] select-none overflow-hidden"
           data-loading
         >
@@ -102,7 +102,7 @@ export default function CanvasLoading() {
                 scale: [0.95, 1.02, 1],
               }}
               transition={{ 
-                duration: 1.8, 
+                duration: 1.3, 
                 ease: "easeOut",
                 times: [0, 0.6, 1]
               }}

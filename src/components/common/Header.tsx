@@ -43,7 +43,7 @@ export default function Header() {
           : "bg-transparent py-6 border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="w-full px-6 md:px-[65px] flex items-center justify-between">
         {/* LOGO */}
         <Link
           href="/"
@@ -53,22 +53,22 @@ export default function Header() {
         </Link>
 
         {/* DESKTOP MENU */}
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="hidden md:flex items-center gap-[20px]">
           <Link
             href="/shop"
-            className="text-sm font-sans font-medium text-white hover-underline transition-colors tracking-wide leading-none"
+            className="text-base md:text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
           >
             {t("shop")}
           </Link>
           <Link
             href="/services"
-            className="text-sm font-sans font-medium text-white hover-underline transition-colors tracking-wide leading-none"
+            className="text-base md:text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
           >
             {t("services")}
           </Link>
           <Link
             href="/contact"
-            className="text-sm font-sans font-medium text-white hover-underline transition-colors tracking-wide leading-none"
+            className="text-base md:text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
           >
             {t("contact")}
           </Link>

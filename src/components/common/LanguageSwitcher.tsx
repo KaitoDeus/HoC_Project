@@ -21,7 +21,7 @@ export default function LanguageSwitcher() {
     <button
       onClick={toggleLanguage}
       disabled={isPending}
-      className="text-sm font-sans font-medium text-white disabled:opacity-50 transition-colors cursor-pointer flex items-center gap-1.5 leading-none tracking-wide"
+      className="text-base md:text-[18px] font-sans font-normal text-white disabled:opacity-50 transition-colors cursor-pointer flex items-center gap-1.5 leading-none tracking-wide"
       aria-label="Toggle language"
     >
       <span>{locale === "vi" ? "EN" : "VN"}</span>

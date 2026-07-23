@@ -27,38 +27,38 @@ export default function Hero() {
 
       {/* DESKTOP LAYOUT (>= md) */}
       <div className="absolute inset-0 z-10 hidden md:block">
-        {/* Constrained layout matching the Header's width constraints */}
-        <div className="max-w-7xl mx-auto w-full h-full px-6 md:px-12 relative">
-          {/* Text 1: "Lunaline Bag" */}
+        {/* Layout matching the Header's margin constraints */}
+        <div className="w-full h-full px-6 md:px-[65px] relative">
+          {/* Text 1: "LUNALINE BAG" */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="absolute left-[49.5%] top-[48.5%] -translate-y-[130%] font-sans text-lg lg:text-xl text-white font-light tracking-[0.12em]"
+            className="absolute left-[49.5%] top-[48.5%] -translate-y-1/2 font-sans text-base md:text-[18px] text-white font-normal tracking-[0.05em] uppercase"
           >
-            Lunaline Bag
+            LUNALINE BAG
           </motion.div>
 
-          {/* Text 2: "Asymmetric, Individual, Unique" */}
+          {/* Text 2: "Asymmetric, Individual, Unique" - Horizontally aligned on exact same top line */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="absolute left-[75%] top-[48.5%] -translate-y-[130%] font-sans text-sm lg:text-base text-white font-light tracking-[0.05em] whitespace-nowrap"
+            className="absolute left-[67%] top-[48.5%] -translate-y-1/2 font-sans text-base md:text-[18px] text-white font-normal tracking-[0.05em] whitespace-nowrap"
           >
             {t("subtitle")}
           </motion.div>
 
-          {/* Text 3: "Shop now" (CTA Button) */}
+          {/* Text 3: "Shop now" (CTA Button) - Aligned with Top Right UI right edge */}
           <motion.div
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="absolute right-6 md:right-12 top-[54%] z-20"
+            className="absolute right-6 md:right-[65px] top-[55%] z-20"
           >
             <Link
               href="/shop"
-              className="group relative inline-flex items-center text-xs tracking-[0.2em] font-medium text-white hover:text-accent transition-colors pb-1 border-b border-white hover:border-accent"
+              className="group relative inline-flex items-center text-base md:text-[18px] tracking-[0.05em] font-normal text-white hover:text-accent transition-colors pb-1 border-b border-white hover:border-accent"
             >
               {tCommon("shop_now")}
             </Link>

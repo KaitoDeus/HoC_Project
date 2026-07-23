@@ -2,11 +2,10 @@
 
 @import "tailwindcss";
 
-/* Define custom fonts with local fallbacks and server OTF files */
+/* Define custom fonts with exact original font files from docs/font */
 @font-face {
   font-family: 'Hyogo';
-  src: local('Hyogo'), local('Hyogo-Regular'), local('Hyogo Regular'),
-       url('/fonts/Hyogo-regular.otf') format('opentype');
+  src: url('/fonts/Hyogo-regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -14,8 +13,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Thin'), local('NeueEinstellung-Thin'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Thin.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Thin.otf') format('opentype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -23,8 +21,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Extra Light'), local('NeueEinstellung-ExtraLight'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Extra Light.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Extra Light.otf') format('opentype');
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -32,8 +29,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Light'), local('NeueEinstellung-Light'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Light.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -41,8 +37,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Regular'), local('NeueEinstellung-Regular'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Regular.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -50,8 +45,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Medium'), local('NeueEinstellung-Medium'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Medium.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -59,8 +53,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Semi Bold'), local('NeueEinstellung-SemiBold'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Semi Bold.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Semi Bold.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -68,8 +61,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Bold'), local('NeueEinstellung-Bold'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Bold.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -77,8 +69,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Extra Bold'), local('NeueEinstellung-ExtraBold'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Extra Bold.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Extra Bold.otf') format('opentype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -86,8 +77,7 @@
 
 @font-face {
   font-family: 'Neue Einstellung';
-  src: local('Neue Einstellung Black'), local('NeueEinstellung-Black'),
-       url('/fonts/Hanken Design Co - Neue Einstellung Black.otf') format('opentype');
+  src: url('/fonts/Hanken Design Co - Neue Einstellung Black.otf') format('opentype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;

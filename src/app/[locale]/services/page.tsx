@@ -183,9 +183,9 @@ export default function ServicesPage({
       <main className="min-h-screen bg-neutral-950 text-white select-none">
         {/* Full-height centered content */}
         <div className="min-h-screen flex items-center justify-center px-6 md:px-12 py-32">
-          <div className="w-full max-w-[820px]">
+          <div className="w-full max-w-[900px]">
             {/* Accordion sections */}
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-col space-y-6">
               {sections.map((section) => {
                 const isOpen = openId === section.id;
 
@@ -197,13 +197,13 @@ export default function ServicesPage({
                     {/* Section header button - inline title and +/- indicator */}
                     <button
                       onClick={() => toggleItem(section.id)}
-                      className="flex items-center gap-3 py-2 text-left uppercase font-sans text-[15px] md:text-[17px] tracking-[0.18em] text-white outline-none"
+                      className="flex items-center gap-3 py-1 text-left uppercase font-sans text-[30px] leading-[34px] tracking-[0.05em] text-white outline-none font-normal"
                       aria-expanded={isOpen}
                     >
                       <span>
                         {isVi ? section.titleVi : section.title}
                       </span>
-                      <span className="font-light">
+                      <span className="font-normal text-[30px] leading-[34px]">
                         {isOpen ? "–" : "+"}
                       </span>
                     </button>
@@ -224,7 +224,7 @@ export default function ServicesPage({
                           }}
                           className="overflow-hidden"
                         >
-                          <div className="pb-4 md:pb-5 pr-12 md:pr-20 font-sans text-[14px] md:text-[15px] leading-[1.85] text-white font-light">
+                          <div className="pt-3 pb-4 md:pb-6 pr-4 font-sans text-[24px] leading-[32px] text-white font-normal">
                             {isVi ? section.contentVi : section.content}
                           </div>
                         </motion.div>

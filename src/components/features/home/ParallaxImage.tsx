@@ -23,33 +23,48 @@ export default function ParallaxImage({
 }: ParallaxImageProps) {
   const centerPoint = total > 1 ? index / (total - 1) : 0;
   const step = total > 1 ? 1 / (total - 1) : 1;
-  const range = [
-    Math.max(0, centerPoint - step),
-    centerPoint,
-    Math.min(1, centerPoint + step)
-  ];
+  const isFirst = index === 0;
+  const isLast = index === total - 1;
+
+  const range = isFirst
+    ? [0, step]
+    : isLast
+    ? [centerPoint - step, 1]
+    : [centerPoint - step, centerPoint, centerPoint + step];
 
   // Reel effects: Full opacity & color at center selection; 50% opacity & 100% grayscale black and white when unselected
-  const scale = useTransform(scrollYProgress, range, [0.95, 1, 0.95]);
-  const opacity = useTransform(scrollYProgress, range, [0.5, 1, 0.5]);
+  const scale = useTransform(
+    scrollYProgress,
+    range,
+    isFirst ? [1, 0.95] : isLast ? [0.95, 1] : [0.95, 1, 0.95]
+  );
+  const opacity = useTransform(
+    scrollYProgress,
+    range,
+    isFirst ? [1, 0.5] : isLast ? [0.5, 1] : [0.5, 1, 0.5]
+  );
   const filter = useTransform(
     scrollYProgress,
     range,
-    ["grayscale(100%)", "grayscale(0%)", "grayscale(100%)"]
+    isFirst
+      ? ["grayscale(0%)", "grayscale(100%)"]
+      : isLast
+      ? ["grayscale(100%)", "grayscale(0%)"]
+      : ["grayscale(100%)", "grayscale(0%)", "grayscale(100%)"]
   );
 
   const getProductLayout = (id: string) => {
     switch (id) {
       case "ownly-cardholder": // Rectangle 5: 272 x 218 -> ~32vh
         return { height: "34vh", aspect: "aspect-[272/218]" };
-      case "ownly-bag": // Rectangle 6: 320 x 320 -> ~44vh
-        return { height: "45vh", aspect: "aspect-square" };
-      case "mooniver-bag": // Rectangle 2: 372 x 372 -> ~52vh
+      case "ownly-bag": // Product 4: 48vh
+        return { height: "48vh", aspect: "aspect-square" };
+      case "mooniver-bag": // Product 2: 53vh
         return { height: "53vh", aspect: "aspect-square" };
-      case "lunaline-bag": // Rectangle 3: 508 x 286 -> ~40vh
+      case "lunaline-bag": // Product 3: 40vh
         return { height: "40vh", aspect: "aspect-[508/286]" };
-      case "layer-bow-charm": // Rectangle 4: 351 x 266 -> ~37vh
-        return { height: "37vh", aspect: "aspect-[351/266]" };
+      case "layer-bow-charm": // Product 5: 34vh
+        return { height: "34vh", aspect: "aspect-[351/266]" };
       default:
         return { height: "50vh", aspect: "aspect-square" };
     }

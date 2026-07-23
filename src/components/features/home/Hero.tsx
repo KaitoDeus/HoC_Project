@@ -40,8 +40,8 @@ export default function Hero() {
             LUNALINE BAG
           </motion.div>
 
-          {/* Text 2 & 3: Slogan & Shop now - Baseline aligned perfectly with LUNALINE BAG */}
-          <div className="absolute right-[3%] md:right-[5%] lg:right-[7%] xl:right-[10%] top-[42%] -translate-y-1/2 mt-[5px] pt-[3px] md:pt-[4px] flex flex-col items-end text-right z-20">
+          {/* Text 2 & 3: Slogan & Shop now - Aligned flush right with Header layout (right-6 md:right-[65px]) */}
+          <div className="absolute right-6 md:right-[65px] top-[42%] -translate-y-1/2 mt-[5px] pt-[3px] md:pt-[4px] flex flex-col items-end text-right z-20">
             {/* Text 2: "Asymmetric, Individual, Unique" - Baseline aligned */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}

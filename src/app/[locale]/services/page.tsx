@@ -177,10 +177,8 @@ export default function ServicesPage({
       <Tracking />
       <Header />
 
-      <main className="min-h-screen bg-neutral-950 text-white select-none">
-        {/* Full-height centered content */}
-        <div className="min-h-screen flex items-center justify-center px-6 md:px-[65px] py-32">
-          <div className="w-full max-w-[1300px]">
+      <main className="w-full min-h-screen bg-neutral-950 text-white select-none flex flex-col justify-center items-center px-6 md:px-12 pt-28 pb-16">
+        <div className="w-full max-w-[1000px] mx-auto my-auto flex flex-col justify-center">
             {/* Accordion sections */}
             <div className="w-full flex flex-col space-y-6">
               {sections.map((section) => {
@@ -227,7 +225,6 @@ export default function ServicesPage({
               })}
             </div>
           </div>
-        </div>
       </main>
     </>
   );

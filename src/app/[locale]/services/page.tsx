@@ -187,11 +187,11 @@ export default function ServicesPage({
                 <div key={section.id} className="w-full">
                   <button
                     onClick={() => toggleItem(section.id)}
-                    className="flex items-center gap-3 py-1 text-left uppercase font-sans text-[28px] leading-[34px] tracking-[0.05em] text-white outline-none font-normal"
+                    className="flex items-center gap-2 py-1 text-left uppercase font-sans text-[22px] leading-[26px] tracking-[-0.02em] text-white outline-none font-normal cursor-pointer"
                     aria-expanded={isOpen}
                   >
                     <span>{isVi ? section.titleVi : section.title}</span>
-                    <span className="font-normal text-[28px] leading-[34px]">
+                    <span className="font-normal text-[22px] leading-[26px] tracking-[-0.02em] ml-1">
                       {isOpen ? "–" : "+"}
                     </span>
                   </button>
@@ -211,7 +211,7 @@ export default function ServicesPage({
                         }}
                         className="overflow-hidden"
                       >
-                        <div className="pt-3 pb-4 md:pb-6 pr-4 font-sans text-[22px] leading-[30px] text-white font-normal">
+                        <div className="pt-3 pb-4 md:pb-6 pr-4 font-sans text-[16px] leading-[22px] tracking-[-0.02em] text-white font-normal">
                           {isVi ? section.contentVi : section.content}
                         </div>
                       </motion.div>

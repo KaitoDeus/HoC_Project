@@ -25,7 +25,7 @@ export default function Accordion({ items, variant = "standard", defaultOpenId }
   const isMinimal = variant === "minimal";
 
   return (
-    <div className={isMinimal ? "w-full font-sans space-y-5" : "w-full divide-y divide-neutral-900 border-t border-b border-neutral-900 font-sans"}>
+    <div className={isMinimal ? "w-full font-sans space-y-4" : "w-full divide-y divide-neutral-900 border-t border-b border-neutral-900 font-sans"}>
       {items.map((item) => {
         const isOpen = openId === item.id;
 
@@ -34,19 +34,19 @@ export default function Accordion({ items, variant = "standard", defaultOpenId }
             <button
               onClick={() => toggleItem(item.id)}
               className={isMinimal 
-                ? "flex items-center text-left group gap-2 py-0.5 outline-none" 
-                : "flex w-full items-center justify-between py-2 text-left group"
+                ? "flex items-center text-left group gap-2 py-0.5 outline-none cursor-pointer" 
+                : "flex w-full items-center justify-between py-2 text-left group cursor-pointer"
               }
               aria-expanded={isOpen}
             >
               <span className={isMinimal 
-                ? "text-[30px] leading-[34px] tracking-[-0.02em] font-normal text-white group-hover:text-accent transition-colors" 
+                ? "text-[22px] leading-[26px] tracking-[-0.02em] font-normal text-white group-hover:text-accent transition-colors" 
                 : "text-sm tracking-[0.2em] font-semibold text-white group-hover:text-accent transition-colors"
               }>
                 {item.title}
               </span>
               <span className={isMinimal
-                ? "text-[30px] leading-[34px] text-white group-hover:text-accent transition-colors font-normal ml-1"
+                ? "text-[22px] leading-[26px] tracking-[-0.02em] text-white group-hover:text-accent transition-colors font-normal ml-1"
                 : "text-white group-hover:text-accent transition-colors font-light text-base"
               }>
                 {isOpen ? "–" : "+"}
@@ -63,7 +63,7 @@ export default function Accordion({ items, variant = "standard", defaultOpenId }
                   className="overflow-hidden"
                 >
                   <div className={isMinimal
-                    ? "pt-3 pb-2 pr-2 text-[24px] text-white leading-[32px] font-sans font-normal max-w-xl"
+                    ? "pt-2 pb-2 pr-2 text-[16px] leading-[22px] tracking-[-0.02em] text-white font-sans font-normal max-w-xl"
                     : "pb-3 pt-1.5 pr-4 text-sm text-white leading-relaxed font-sans font-light max-w-md"
                   }>
                     {item.content}

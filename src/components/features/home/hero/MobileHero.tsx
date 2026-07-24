@@ -17,7 +17,7 @@ export default function MobileHero() {
           alt="Heart of Classy Lunaline Bag Mobile Banner"
           fill
           priority
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw, 1px"
           className="object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-neutral-950/40 pointer-events-none" />

@@ -60,39 +60,76 @@ export default function CanvasLoading() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950 select-none overflow-hidden px-6 md:px-16"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950 select-none overflow-hidden"
           data-loading
         >
-          <div className="w-full max-w-4xl flex items-center justify-center relative">
-            {/* Left track & progress line */}
+          {/* ================= DESKTOP LOADING (hidden md:flex) ================= */}
+          <div className="hidden md:flex flex-row items-center justify-center relative w-full max-w-[1500px] px-12 lg:px-24">
+            {/* Left Track & Progress */}
             <div className="flex-1 h-[1px] bg-white/20 relative overflow-hidden">
               <motion.div
-                className="absolute inset-y-0 left-0 bg-white shadow-[0_0_8px_rgba(255,255,255,0.7)]"
+                className="absolute inset-y-0 left-0 bg-white"
                 style={{ width: `${progress}%` }}
               />
             </div>
 
-            {/* Centered metallic chrome heart logo */}
+            {/* Centered Chrome Heart Logo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-4 sm:mx-6 flex-shrink-0 flex items-center justify-center z-10"
+              className="relative w-52 h-52 lg:w-72 lg:h-72 xl:w-80 xl:h-80 mx-14 lg:mx-20 flex-shrink-0 flex items-center justify-center z-10"
             >
               <Image
                 src={logoImg}
                 alt="Heart of Classy Logo"
                 fill
-                sizes="(max-width: 768px) 80px, 96px"
                 priority
-                className="object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]"
+                sizes="320px"
+                className="object-contain select-none"
               />
             </motion.div>
 
-            {/* Right track & progress line */}
+            {/* Right Track & Progress */}
             <div className="flex-1 h-[1px] bg-white/20 relative overflow-hidden">
               <motion.div
-                className="absolute inset-y-0 right-0 bg-white shadow-[0_0_8px_rgba(255,255,255,0.7)]"
+                className="absolute inset-y-0 right-0 bg-white"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+
+          {/* ================= MOBILE LOADING (md:hidden) ================= */}
+          <div className="md:hidden flex flex-row items-center justify-center relative w-full max-w-[340px] px-4">
+            {/* Left Track */}
+            <div className="flex-1 h-[1px] bg-white/20 relative overflow-hidden">
+              <motion.div
+                className="absolute inset-y-0 left-0 bg-white"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+
+            {/* Centered Chrome Heart Logo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative w-20 h-20 mx-5 flex-shrink-0 flex items-center justify-center z-10"
+            >
+              <Image
+                src={logoImg}
+                alt="Heart of Classy Logo"
+                fill
+                priority
+                sizes="80px"
+                className="object-contain select-none"
+              />
+            </motion.div>
+
+            {/* Right Track */}
+            <div className="flex-1 h-[1px] bg-white/20 relative overflow-hidden">
+              <motion.div
+                className="absolute inset-y-0 right-0 bg-white"
                 style={{ width: `${progress}%` }}
               />
             </div>

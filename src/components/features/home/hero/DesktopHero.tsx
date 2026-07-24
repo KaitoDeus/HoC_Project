@@ -18,7 +18,7 @@ export default function DesktopHero() {
           alt="Heart of Classy premium designer bag banner"
           fill
           priority
-          sizes="100vw"
+          sizes="(min-width: 768px) 100vw, 1px"
           className="object-cover object-center select-none"
         />
         <div className="absolute inset-0 bg-neutral-950/15 pointer-events-none" />

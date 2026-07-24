@@ -20,73 +20,94 @@ export default function Header() {
   }, [isMobileMenuOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 py-6 bg-transparent border-b border-transparent pointer-events-none">
-      <div className="w-full px-6 md:px-[65px] flex items-center justify-between pointer-events-auto">
+    <header className="fixed top-0 left-0 right-0 z-40 py-6 md:py-6 bg-transparent pointer-events-none">
+      {/* Desktop Navigation */}
+      <div className="hidden md:flex w-full px-[65px] items-center justify-between pointer-events-auto">
         <Link
           href="/"
-          className="font-hyogo text-xl md:text-2xl font-normal tracking-[0.03em] leading-none text-white hover:text-accent transition-colors flex items-center pt-0.5"
+          className="font-hyogo text-2xl font-normal tracking-[0.03em] leading-none text-white hover:text-accent transition-colors flex items-center pt-0.5"
         >
           HEART of CLASSY
         </Link>
 
-        <nav className="hidden md:flex items-center gap-[20px]">
+        <nav className="flex items-center gap-[20px]">
           <Link
             href="/shop"
-            className="text-base md:text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
+            className="text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
           >
             {t("shop")}
           </Link>
           <Link
             href="/services"
-            className="text-base md:text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
+            className="text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
           >
             {t("services")}
           </Link>
           <Link
             href="/contact"
-            className="text-base md:text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
+            className="text-[18px] font-sans font-normal text-white hover-underline transition-colors tracking-wide leading-none"
           >
             {t("contact")}
           </Link>
           <LanguageSwitcher />
         </nav>
+      </div>
 
-        <div className="flex items-center gap-4 md:hidden">
-          <LanguageSwitcher />
+      {/* Mobile Navigation Header matching mockup */}
+      <div className="md:hidden flex flex-col w-full px-6 pt-2 pointer-events-auto relative">
+        <div className="w-full flex justify-center items-center">
+          <Link
+            href="/"
+            className="font-hyogo text-[22px] font-normal tracking-[0.05em] text-white text-center block pt-1"
+          >
+            HEART of CLASSY
+          </Link>
+        </div>
+
+        <div className="w-full flex items-center justify-start pt-1">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-white transition-colors"
+            className="text-white p-1 focus:outline-none cursor-pointer"
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
       </div>
 
+      {/* Mobile Fullscreen Menu Dropdown with Language Switcher */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-[60px] z-30 bg-neutral-950/95 backdrop-blur-lg flex flex-col p-8 gap-8 animate-fade-in border-t border-neutral-900">
+        <div className="md:hidden fixed inset-0 top-[110px] z-30 bg-neutral-950/95 backdrop-blur-lg flex flex-col p-8 gap-8 animate-fade-in border-t border-neutral-900 pointer-events-auto">
           <nav className="flex flex-col gap-6">
             <Link
               href="/shop"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-base font-sans font-medium text-white transition-colors"
+              className="text-lg font-sans font-medium text-white transition-colors"
             >
               {t("shop")}
             </Link>
             <Link
               href="/services"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-base font-sans font-medium text-white transition-colors"
+              className="text-lg font-sans font-medium text-white transition-colors"
             >
               {t("services")}
             </Link>
             <Link
               href="/contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-base font-sans font-medium text-white transition-colors"
+              className="text-lg font-sans font-medium text-white transition-colors"
             >
               {t("contact")}
             </Link>
+
+            <div className="pt-4 border-t border-neutral-800/60 w-fit">
+              <LanguageSwitcher />
+            </div>
           </nav>
         </div>
       )}

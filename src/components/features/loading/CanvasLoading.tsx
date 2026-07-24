@@ -60,50 +60,42 @@ export default function CanvasLoading() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#161616] select-none overflow-hidden"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950 select-none overflow-hidden px-6 md:px-16"
           data-loading
         >
-          <div className="absolute inset-x-0 flex items-center justify-between pointer-events-none px-0">
-            <div className="flex-1 h-[1px] bg-neutral-900/60 relative">
-              <motion.div 
-                className="absolute inset-y-0 left-0 right-0 bg-gradient-to-r from-white/10 to-white origin-left shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-                style={{ scaleX: progress / 100 }}
+          <div className="w-full max-w-4xl flex items-center justify-center relative">
+            {/* Left track & progress line */}
+            <div className="flex-1 h-[1px] bg-white/20 relative overflow-hidden">
+              <motion.div
+                className="absolute inset-y-0 left-0 bg-white shadow-[0_0_8px_rgba(255,255,255,0.7)]"
+                style={{ width: `${progress}%` }}
               />
             </div>
 
-            <div className="w-56 sm:w-64 md:w-80 flex-shrink-0" />
-
-            <div className="flex-1 h-[1px] bg-neutral-900/60 relative">
-              <motion.div 
-                className="absolute inset-y-0 left-0 right-0 bg-gradient-to-l from-white/10 to-white origin-right shadow-[0_0_8px_rgba(255,255,255,0.4)]"
-                style={{ scaleX: progress / 100 }}
-              />
-            </div>
-          </div>
-
-          <div className="relative w-full max-w-7xl h-full flex items-center justify-center">
+            {/* Centered metallic chrome heart logo */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ 
-                opacity: [0, 1, 1],
-                scale: [0.95, 1.02, 1],
-              }}
-              transition={{ 
-                duration: 1.3, 
-                ease: "easeOut",
-                times: [0, 0.6, 1]
-              }}
-              className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 flex items-center justify-center z-10"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-4 sm:mx-6 flex-shrink-0 flex items-center justify-center z-10"
             >
               <Image
                 src={logoImg}
                 alt="Heart of Classy Logo"
                 fill
-                sizes="(max-width: 768px) 192px, 288px"
+                sizes="(max-width: 768px) 80px, 96px"
                 priority
-                className="object-contain"
+                className="object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]"
               />
             </motion.div>
+
+            {/* Right track & progress line */}
+            <div className="flex-1 h-[1px] bg-white/20 relative overflow-hidden">
+              <motion.div
+                className="absolute inset-y-0 right-0 bg-white shadow-[0_0_8px_rgba(255,255,255,0.7)]"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
           </div>
         </motion.div>
       )}

@@ -23,3 +23,15 @@ export interface Product {
   colorVariants?: ColorVariant[];
   additionalImages?: string[];
 }
+
+export interface ProductLayout {
+  height: string;
+  aspect: string;
+}
+
+export interface IProductRepository {
+  getAllProducts(): Product[];
+  getProductById(id: string): Product | null;
+  getProductLayout(id: string, isReel?: boolean): ProductLayout;
+  isInteractive(id: string): boolean;
+}

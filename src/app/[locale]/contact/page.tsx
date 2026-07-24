@@ -29,10 +29,8 @@ export default async function ContactPage({
       <Header />
 
       <main className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row md:h-screen md:overflow-hidden select-none">
-        {/* LEFT COLUMN: Contact Information */}
         <div className="w-full md:w-[36%] lg:w-[32%] bg-neutral-950 flex flex-col justify-center items-start px-6 md:pl-[65px] md:pr-12 py-32 md:py-20 h-full border-r border-neutral-900/40 z-10">
           <div className="my-auto w-full flex flex-col gap-12 md:gap-16">
-            {/* Top section: GENERAL REQUIRES */}
             <div className="space-y-2">
               <h2 className="font-sans text-[30px] leading-[34px] font-normal uppercase tracking-wide text-white block select-text">
                 {locale === "vi" ? "LIÊN HỆ CHUNG" : "GENERAL REQUIRES"}
@@ -45,7 +43,6 @@ export default async function ContactPage({
               </a>
             </div>
 
-            {/* Bottom section: FOLLOW US */}
             <div className="space-y-3">
               <h2 className="font-sans text-[30px] leading-[34px] font-normal uppercase tracking-wide text-white block select-text">
                 {locale === "vi" ? "THEO DÕI CHÚNG TÔI" : "FOLLOW US"}
@@ -80,7 +77,6 @@ export default async function ContactPage({
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Handbag Image */}
         <div className="w-full md:w-[68%] lg:w-[72%] h-[50vh] md:h-full relative bg-neutral-900 overflow-hidden order-first md:order-last">
           <Image
             src="/images/Contact.jpg"
@@ -90,11 +86,9 @@ export default async function ContactPage({
             sizes="(max-width: 768px) 100vw, 70vw"
             className="object-cover object-center"
           />
-          {/* Subtle overlay to dim image slightly */}
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/40 via-transparent to-transparent pointer-events-none" />
         </div>
       </main>
     </>
   );
 }
-

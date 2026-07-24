@@ -12,7 +12,6 @@ export default function Hero() {
 
   return (
     <section className="relative w-full h-[100vh] min-h-[500px] md:min-h-[600px] bg-neutral-950 overflow-hidden flex items-center justify-center">
-      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
           src={heroBgSvg}
@@ -22,15 +21,11 @@ export default function Hero() {
           sizes="100vw"
           className="object-cover object-center select-none"
         />
-        {/* Subtle dark overlay to boost contrast */}
         <div className="absolute inset-0 bg-neutral-950/15 pointer-events-none" />
       </div>
 
-      {/* DESKTOP LAYOUT (>= md) */}
       <div className="absolute inset-0 z-10 hidden md:block">
-        {/* Layout matching the Header's margin constraints */}
         <div className="w-full h-full px-6 md:px-[65px] relative">
-          {/* Text 1: "LUNALINE BAG" - Responsive positioning & font size */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -40,9 +35,7 @@ export default function Hero() {
             LUNALINE BAG
           </motion.div>
 
-          {/* Text 2 & 3: Slogan & Shop now - Aligned flush right with Header layout (right-6 md:right-[65px]) */}
           <div className="absolute right-6 md:right-[65px] top-[42%] -translate-y-1/2 mt-[5px] pt-[3px] md:pt-[4px] flex flex-col items-end text-right z-20">
-            {/* Text 2: "Asymmetric, Individual, Unique" - Baseline aligned */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -52,7 +45,6 @@ export default function Hero() {
               {t("subtitle")}
             </motion.div>
 
-            {/* Text 3: "Shop now" - Directly below slogan, right-aligned flush with ...Unique */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -70,7 +62,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* MOBILE LAYOUT (< md) */}
       <div className="relative z-10 w-full px-6 flex flex-col items-center text-center space-y-8 md:hidden mt-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

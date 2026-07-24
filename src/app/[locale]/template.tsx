@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative w-full">
-      {/* Content entrance transition: subtle fade-in */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -15,7 +14,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
         {children}
       </motion.div>
 
-      {/* Top half shutter panel */}
       <motion.div
         className="fixed top-0 left-0 w-full h-1/2 bg-neutral-950 z-35 pointer-events-none origin-bottom"
         initial={{ scaleY: 1 }}
@@ -23,7 +21,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
         transition={{ duration: 0.85, ease: [0.85, 0, 0.15, 1], delay: 0.05 }}
       />
 
-      {/* Bottom half shutter panel */}
       <motion.div
         className="fixed bottom-0 left-0 w-full h-1/2 bg-neutral-950 z-35 pointer-events-none origin-top"
         initial={{ scaleY: 1 }}
@@ -31,7 +28,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
         transition={{ duration: 0.85, ease: [0.85, 0, 0.15, 1], delay: 0.05 }}
       />
 
-      {/* Premium center text logo fade out */}
       <div className="fixed inset-0 z-38 flex items-center justify-center pointer-events-none">
         <motion.div
           initial={{ opacity: 1, scale: 1, letterSpacing: "0.2em" }}

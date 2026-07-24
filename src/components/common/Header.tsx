@@ -5,26 +5,23 @@ import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { scrollService } from "@/services/scroll.service";
 
 export default function Header() {
   const t = useTranslations("common.menu");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
-    if (lenis) {
-      if (isMobileMenuOpen) {
-        lenis.stop();
-      } else {
-        lenis.start();
-      }
+    if (isMobileMenuOpen) {
+      scrollService.stop();
+    } else {
+      scrollService.start();
     }
   }, [isMobileMenuOpen]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 py-6 bg-transparent border-b border-transparent pointer-events-none">
       <div className="w-full px-6 md:px-[65px] flex items-center justify-between pointer-events-auto">
-        {/* LOGO */}
         <Link
           href="/"
           className="font-hyogo text-xl md:text-2xl font-normal tracking-[0.03em] leading-none text-white hover:text-accent transition-colors flex items-center pt-0.5"
@@ -32,7 +29,6 @@ export default function Header() {
           HEART of CLASSY
         </Link>
 
-        {/* DESKTOP MENU */}
         <nav className="hidden md:flex items-center gap-[20px]">
           <Link
             href="/shop"
@@ -55,7 +51,6 @@ export default function Header() {
           <LanguageSwitcher />
         </nav>
 
-        {/* MOBILE MENU TOGGLE */}
         <div className="flex items-center gap-4 md:hidden">
           <LanguageSwitcher />
           <button
@@ -68,7 +63,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* MOBILE DRAWER */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 top-[60px] z-30 bg-neutral-950/95 backdrop-blur-lg flex flex-col p-8 gap-8 animate-fade-in border-t border-neutral-900">
           <nav className="flex flex-col gap-6">

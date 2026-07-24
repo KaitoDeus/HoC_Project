@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useTransform, MotionValue } from "framer-motion";
 import { Product } from "@/types/product";
+import { productService } from "@/services/product.service";
 
 interface ParallaxImageProps {
   product: Product;
@@ -32,7 +33,6 @@ export default function ParallaxImage({
     ? [centerPoint - step, 1]
     : [centerPoint - step, centerPoint, centerPoint + step];
 
-  // Reel effects: Full opacity & color at center selection; 50% opacity & 100% grayscale black and white when unselected
   const scale = useTransform(
     scrollYProgress,
     range,
@@ -53,25 +53,8 @@ export default function ParallaxImage({
       : ["grayscale(100%)", "grayscale(0%)", "grayscale(100%)"]
   );
 
-  const getProductLayout = (id: string) => {
-    switch (id) {
-      case "ownly-cardholder": // Rectangle 5: 272 x 218 -> ~32vh
-        return { height: "34vh", aspect: "aspect-[272/218]" };
-      case "ownly-bag": // Product 4: 48vh
-        return { height: "48vh", aspect: "aspect-square" };
-      case "mooniver-bag": // Product 2: 53vh
-        return { height: "53vh", aspect: "aspect-square" };
-      case "lunaline-bag": // Product 3: 40vh
-        return { height: "40vh", aspect: "aspect-[508/286]" };
-      case "layer-bow-charm": // Product 5: 34vh
-        return { height: "34vh", aspect: "aspect-[351/266]" };
-      default:
-        return { height: "50vh", aspect: "aspect-square" };
-    }
-  };
-
-  const layout = getProductLayout(product.id);
-  const isInteractive = product.id === "mooniver-bag" || product.id === "lunaline-bag";
+  const layout = productService.getProductLayout(product.id, false);
+  const isInteractive = productService.isInteractive(product.id);
 
   return (
     <div className="w-full h-full flex items-center justify-center bg-neutral-950">
@@ -97,11 +80,9 @@ export default function ParallaxImage({
             className="object-contain object-center transition-transform duration-700 group-hover:scale-103"
             priority={index === 0}
           />
-          {/* Subtle hover overlay */}
           <div className="absolute inset-0 bg-neutral-950/10 group-hover:bg-transparent transition-colors duration-500 pointer-events-none" />
         </div>
 
-        {/* Out of Stock Badge */}
         {product.isOutOfStock && (
           <div className="absolute top-6 right-6 bg-neutral-950/80 backdrop-blur-sm border border-neutral-900 px-3 py-1 text-[9px] tracking-widest text-neutral-400 font-semibold rounded-[2px] z-10">
             {tProduct("status.out_stock")}

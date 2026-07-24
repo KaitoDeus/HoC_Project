@@ -4,47 +4,39 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import logoImg from "@/assets/images/logo.svg";
+import { scrollService } from "@/services/scroll.service";
 
 export default function CanvasLoading() {
   const [isVisible, setIsVisible] = useState(true);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Khóa cuộn trang và ẩn scrollbar
     const originalOverflow = document.body.style.overflow;
     const originalHtmlOverflow = document.documentElement.style.overflow;
 
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
 
-    // Tạm dừng Lenis để tránh cuộn trang khi đang tải
-    const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
-    if (lenis) lenis.stop();
+    scrollService.stop();
 
-    // Ẩn màn hình loading sau 2.5 giây (Tăng tốc độ tải trang 28%)
     const timer = setTimeout(() => {
       setIsVisible(false);
       document.body.style.overflow = originalOverflow;
       document.documentElement.style.overflow = originalHtmlOverflow;
-      // Kích hoạt lại Lenis nếu có
-      const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
-      if (lenis) lenis.start();
+      scrollService.start();
     }, 2500);
 
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = originalOverflow;
       document.documentElement.style.overflow = originalHtmlOverflow;
-      // Khởi động lại Lenis khi unmount (đảm bảo mở khóa khi chuyển trang trước 2.5 giây)
-      const lenis = (window as unknown as { lenis?: { stop: () => void; start: () => void } }).lenis;
-      if (lenis) lenis.start();
+      scrollService.start();
     };
   }, []);
 
   useEffect(() => {
-    // Chạy phần trăm loading realtime từ 0 đến 100
     const start = Date.now();
-    const duration = 2000; // Đạt 100% trong 2.0s trước khi fade-out ở 2.5s
+    const duration = 2000;
 
     const updateProgress = () => {
       const now = Date.now();
@@ -71,9 +63,7 @@ export default function CanvasLoading() {
           className="fixed inset-0 z-50 flex items-center justify-center bg-[#161616] select-none overflow-hidden"
           data-loading
         >
-          {/* Thanh ngang chạy từ 2 bên rìa màn hình hội tụ vào giữa logo theo % tiến trình */}
           <div className="absolute inset-x-0 flex items-center justify-between pointer-events-none px-0">
-            {/* Line bên trái - chạy từ trái qua phải */}
             <div className="flex-1 h-[1px] bg-neutral-900/60 relative">
               <motion.div 
                 className="absolute inset-y-0 left-0 right-0 bg-gradient-to-r from-white/10 to-white origin-left shadow-[0_0_8px_rgba(255,255,255,0.4)]"
@@ -81,10 +71,8 @@ export default function CanvasLoading() {
               />
             </div>
 
-            {/* Khoảng cách cho logo ở giữa */}
             <div className="w-56 sm:w-64 md:w-80 flex-shrink-0" />
 
-            {/* Line bên phải - chạy từ phải qua trái */}
             <div className="flex-1 h-[1px] bg-neutral-900/60 relative">
               <motion.div 
                 className="absolute inset-y-0 left-0 right-0 bg-gradient-to-l from-white/10 to-white origin-right shadow-[0_0_8px_rgba(255,255,255,0.4)]"
@@ -94,7 +82,6 @@ export default function CanvasLoading() {
           </div>
 
           <div className="relative w-full max-w-7xl h-full flex items-center justify-center">
-            {/* Logo trung tâm */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ 

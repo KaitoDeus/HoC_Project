@@ -3,36 +3,19 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Mail, ArrowUpRight } from "lucide-react";
+import { analyticsService } from "@/services/analytics.service";
 
 export default function Footer() {
   const t = useTranslations("contact");
 
-
-  // Hàm track click liên hệ
   const trackContact = (platform: string) => {
-    if (typeof window !== "undefined") {
-      // Google Analytics 4 Event
-      if (window.gtag) {
-        window.gtag("event", "contact_click", {
-          contact_platform: platform,
-        });
-      }
-      // Meta Pixel Event
-      if (window.fbq) {
-        window.fbq("trackCustom", "ContactClick", {
-          platform: platform,
-        });
-      }
-    }
+    analyticsService.trackContact(platform);
   };
 
   return (
     <footer id="contact" className="w-full bg-neutral-950 border-t border-neutral-900 overflow-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2">
-        
-        {/* LEFT COLUMN: BRAND INFO & SOCIALS */}
         <div className="flex flex-col justify-between p-8 md:p-20 lg:p-24 space-y-12">
-          
           <div className="space-y-4">
             <h2 className="text-neutral-500 font-sans text-xs tracking-[0.2em]">
               {t("title")}
@@ -42,7 +25,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* CONTACT INFO (EMAIL) */}
           <div className="space-y-3">
             <span className="text-neutral-500 text-xs tracking-wider block">
               {t("email")}
@@ -58,7 +40,6 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* SOCIAL LINKS */}
           <div className="space-y-3">
             <span className="text-neutral-500 text-xs tracking-wider block">
               Follow Us
@@ -84,7 +65,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* LARGE DECORATIVE TEXT & COPYRIGHT */}
           <div className="pt-8 border-t border-neutral-900/60 space-y-4">
             <h1 className="font-hyogo text-3xl md:text-5xl font-normal tracking-[0.15em] text-neutral-900 select-none">
               HEART of CLASSY
@@ -93,10 +73,8 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} Heart of Classy. All rights reserved.
             </p>
           </div>
-
         </div>
 
-        {/* RIGHT COLUMN: LIFESTYLE IMAGE */}
         <div className="relative min-h-[400px] md:min-h-full w-full bg-neutral-900 overflow-hidden group">
           <Image
             src="/images/footer.png"
@@ -108,7 +86,6 @@ export default function Footer() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/40 via-transparent to-transparent pointer-events-none" />
         </div>
-
       </div>
     </footer>
   );

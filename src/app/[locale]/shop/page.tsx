@@ -19,13 +19,8 @@ export async function generateMetadata({
 export default function ShopPage() {
   return (
     <>
-      {/* Script Theo dõi GA4 và Meta Pixel */}
       <Tracking />
-
-      {/* Thanh điều hướng */}
       <Header />
-
-      {/* Nội dung chính của trang Cửa Hàng */}
       <main className="flex-grow">
         <Gallery />
       </main>

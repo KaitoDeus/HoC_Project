@@ -179,52 +179,49 @@ export default function ServicesPage({
 
       <main className="w-full min-h-screen bg-neutral-950 text-white select-none flex flex-col justify-center items-center px-6 md:px-12 pt-28 pb-16">
         <div className="w-full max-w-[1000px] mx-auto my-auto flex flex-col justify-center">
-            {/* Accordion sections */}
-            <div className="w-full flex flex-col space-y-6">
-              {sections.map((section) => {
-                const isOpen = openId === section.id;
+          <div className="w-full flex flex-col space-y-6">
+            {sections.map((section) => {
+              const isOpen = openId === section.id;
 
-                return (
-                  <div key={section.id} className="w-full">
-                    {/* Section header button - inline title and +/- indicator */}
-                    <button
-                      onClick={() => toggleItem(section.id)}
-                      className="flex items-center gap-3 py-1 text-left uppercase font-sans text-[28px] leading-[34px] tracking-[0.05em] text-white outline-none font-normal"
-                      aria-expanded={isOpen}
-                    >
-                      <span>{isVi ? section.titleVi : section.title}</span>
-                      <span className="font-normal text-[28px] leading-[34px]">
-                        {isOpen ? "–" : "+"}
-                      </span>
-                    </button>
+              return (
+                <div key={section.id} className="w-full">
+                  <button
+                    onClick={() => toggleItem(section.id)}
+                    className="flex items-center gap-3 py-1 text-left uppercase font-sans text-[28px] leading-[34px] tracking-[0.05em] text-white outline-none font-normal"
+                    aria-expanded={isOpen}
+                  >
+                    <span>{isVi ? section.titleVi : section.title}</span>
+                    <span className="font-normal text-[28px] leading-[34px]">
+                      {isOpen ? "–" : "+"}
+                    </span>
+                  </button>
 
-                    {/* Expandable content */}
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{
-                            height: {
-                              duration: 0.4,
-                              ease: [0.25, 1, 0.5, 1],
-                            },
-                            opacity: { duration: 0.3, delay: 0.05 },
-                          }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pt-3 pb-4 md:pb-6 pr-4 font-sans text-[22px] leading-[30px] text-white font-normal">
-                            {isVi ? section.contentVi : section.content}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              })}
-            </div>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{
+                          height: {
+                            duration: 0.4,
+                            ease: [0.25, 1, 0.5, 1],
+                          },
+                          opacity: { duration: 0.3, delay: 0.05 },
+                        }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pt-3 pb-4 md:pb-6 pr-4 font-sans text-[22px] leading-[30px] text-white font-normal">
+                          {isVi ? section.contentVi : section.content}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
           </div>
+        </div>
       </main>
     </>
   );

@@ -7,6 +7,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { X } from "lucide-react";
 import Accordion from "@/components/ui/Accordion";
 import { Product } from "@/types/product";
+import { analyticsService } from "@/services/analytics.service";
 
 interface ProductDetailModalProps {
   selectedProduct: Product;
@@ -24,14 +25,12 @@ export default function ProductDetailModal({
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const rightColumnRef = useRef<HTMLDivElement>(null);
 
-  // Reset scroll container of the right column when switching variants or products
   useEffect(() => {
     if (rightColumnRef.current) {
       rightColumnRef.current.scrollTop = 0;
     }
   }, [selectedColorIndex, selectedProduct.id]);
 
-  // Derive active images based on color variant or fallback to additionalImages
   const activeImages = (() => {
     if (selectedProduct.colorVariants && selectedProduct.colorVariants[selectedColorIndex]) {
       const variant = selectedProduct.colorVariants[selectedColorIndex];
@@ -43,24 +42,7 @@ export default function ProductDetailModal({
   })();
 
   const handleTrackClick = (platform: "facebook" | "instagram", product: Product) => {
-    if (typeof window !== "undefined") {
-      // GA4 Event
-      if (window.gtag) {
-        window.gtag("event", "contact_click", {
-          contact_platform: platform,
-          product_id: product.id,
-          product_name: product.name,
-        });
-      }
-      // Meta Pixel Event
-      if (window.fbq) {
-        window.fbq("trackCustom", "ContactClick", {
-          platform: platform,
-          productId: product.id,
-          productName: product.name,
-        });
-      }
-    }
+    analyticsService.trackProductClick(platform, product.id, product.name);
   };
 
   return (
@@ -75,7 +57,6 @@ export default function ProductDetailModal({
         }`}
         data-lenis-prevent
       >
-        {/* LEFT COLUMN: Product Details & Accordion OR Social Links */}
         <div
           onClick={showOrderLinks ? () => setShowOrderLinks(false) : undefined}
           className={`w-full md:w-[60%] h-[60vh] md:h-full bg-neutral-950 text-white flex flex-col justify-start px-6 md:pl-[65px] md:pr-12 lg:pr-16 overflow-y-auto relative ${
@@ -84,7 +65,6 @@ export default function ProductDetailModal({
         >
           {showOrderLinks ? (
             <>
-              {/* Close button in top-right of left panel */}
               <div className="absolute top-8 right-8 md:right-16 z-20">
                 <button
                   onClick={() => setShowOrderLinks(false)}
@@ -95,7 +75,6 @@ export default function ProductDetailModal({
                 </button>
               </div>
 
-              {/* Right-aligned social links (vertically centered) */}
               <div className="flex-grow flex flex-col justify-center items-end my-auto pr-4 md:pr-8 lg:pr-12">
                 <div className="flex flex-col items-end space-y-6">
                   <a
@@ -127,10 +106,8 @@ export default function ProductDetailModal({
             </>
           ) : (
             <>
-              {/* Main Content Area (Fixed Top Offset pt-[calc(35vh+20px)] - Moved down by 20px total) */}
               <div className="w-full pt-[calc(35vh+20px)] pb-16">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 lg:gap-14 items-start">
-                  {/* Sub-column 1: Product Name, Price & Color (Flush Left with Header Logo) */}
                   <div className="md:col-span-4 lg:col-span-4 space-y-6 md:space-y-8">
                     <div className="space-y-1.5">
                       <h1 className="font-sans text-[30px] tracking-tight text-white uppercase leading-tight font-normal">
@@ -141,7 +118,6 @@ export default function ProductDetailModal({
                       </div>
                     </div>
 
-                    {/* Color picker radio buttons */}
                     {selectedProduct.colorVariants && selectedProduct.colorVariants.length > 0 && (
                       <div className="space-y-3 pt-1">
                         <span className="text-[16px] tracking-[-0.02em] font-sans text-white/70">
@@ -171,7 +147,6 @@ export default function ProductDetailModal({
                     )}
                   </div>
 
-                  {/* Sub-column 2: Accordion & Order & Enquire link (Centered in left panel) */}
                   <div className="md:col-span-8 lg:col-span-8 space-y-6">
                     <Accordion
                       defaultOpenId="details"
@@ -225,7 +200,6 @@ export default function ProductDetailModal({
           )}
         </div>
 
-        {/* RIGHT COLUMN: Large Image & Typographic Overlay */}
         <div
           ref={rightColumnRef}
           onClick={showOrderLinks ? () => setShowOrderLinks(false) : undefined}
@@ -255,7 +229,6 @@ export default function ProductDetailModal({
                     priority={idx === 0}
                     className="w-full h-auto object-contain block"
                   />
-                  {/* Overlay shadow */}
                   <div className="absolute inset-0 bg-neutral-950/10 pointer-events-none" />
                 </div>
               ))
@@ -275,13 +248,11 @@ export default function ProductDetailModal({
                   className="w-full h-auto object-contain block transition-opacity duration-500"
                   key={selectedColorIndex}
                 />
-                {/* Overlay shadow */}
                 <div className="absolute inset-0 bg-neutral-950/10 pointer-events-none" />
               </div>
             )}
           </div>
 
-          {/* Close button for Mobile screen only (in Header area) */}
           <button
             onClick={closeProduct}
             className="absolute top-6 right-6 z-50 p-2 rounded-full border border-white/20 text-white/70 hover:text-white hover:border-white/50 bg-neutral-950/40 backdrop-blur-sm transition-colors md:hidden"

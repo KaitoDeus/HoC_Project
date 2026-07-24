@@ -8,10 +8,8 @@ export default async function AboutPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-
   const isVi = locale === "vi";
 
-  // localized content for the Care & Services page
   const pageTitle = isVi ? "Bảo Quản & Dịch Vụ" : "Care & Services";
   const pageSubtitle = isVi
     ? "Chúng tôi cam kết mang lại trải nghiệm dịch vụ chăm sóc sản phẩm cao cấp, xứng tầm chất lượng tác phẩm nghệ thuật."
@@ -105,8 +103,6 @@ export default async function AboutPage({
       <Header />
 
       <main className="min-h-screen bg-neutral-950 text-white flex flex-col md:flex-row md:h-screen md:overflow-hidden select-none">
-        
-        {/* LEFT COLUMN: Page Title & Info */}
         <div className="w-full md:w-[35%] lg:w-[30%] bg-neutral-950 flex flex-col justify-between p-8 pt-32 pb-16 md:p-12 md:pt-40 md:pb-24 lg:p-16 lg:pt-48 lg:pb-32 space-y-12 md:space-y-0 h-full border-r border-neutral-900/40 z-10">
           <div className="hidden md:block" />
 
@@ -122,13 +118,11 @@ export default async function AboutPage({
             </p>
           </div>
 
-          {/* Contact note */}
           <div className="text-neutral-500 text-[10px] tracking-widest font-sans">
             {isVi ? "Chế tác tỉ mỉ tại Việt Nam" : "Meticulously crafted in Vietnam"}
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Accordion Sections */}
         <div className="w-full md:w-[65%] lg:w-[70%] h-full overflow-y-auto px-8 py-16 md:px-16 md:py-32 lg:px-24 lg:py-48 flex items-center bg-neutral-950 border-t md:border-t-0 border-neutral-900">
           <div className="w-full max-w-2xl space-y-8">
             <Accordion
@@ -159,7 +153,6 @@ export default async function AboutPage({
             />
           </div>
         </div>
-
       </main>
     </>
   );

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import SmoothScroll from "@/components/common/SmoothScroll";
-import "../../styles/globals.css"; // Di chuyển globals.css sang thư mục styles cho sạch sẽ
+import "../../styles/globals.css";
 
 export async function generateMetadata({
   params,
@@ -15,7 +15,7 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: t("description"),
-    metadataBase: new URL("https://heartofclassy.vn"), // Đặt mặc định domain
+    metadataBase: new URL("https://heartofclassy.vn"),
     openGraph: {
       title: t("title"),
       description: t("description"),
@@ -55,4 +55,3 @@ export default async function LocaleLayout({
     </html>
   );
 }
-
